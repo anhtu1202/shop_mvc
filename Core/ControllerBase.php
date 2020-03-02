@@ -11,6 +11,7 @@ $this->dataView = $data;
 // tên file view sẽ đặt đuôi file là: .phtml để cho phép vừa viết html vừa viết php
 	$this->file_view_path = app_path.'/View/'. str_replace('.', '/',
 $view_name).'.php';
+	
 //nhúng file layout trước
 if(file_exists($this->layout))
 	require_once $this->layout;
