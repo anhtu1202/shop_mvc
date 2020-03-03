@@ -1,21 +1,19 @@
-﻿<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';
-	include '../classes/category.php';
-	$cat = new category();
-	if (isset($_GET['cat_id'])) {
-    $cat_id = $_GET['cat_id'];
-    $del_cat = $cat->del_category($cat_id);
-}
-?>
+﻿<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Category List</h2>
-                <div class="block">     
+                <div class="block">  
                 	<?php 
-                    if (isset($del_cat)) {
-                        echo $del_cat;
-                    }
-                	 ?>	
+                		if (isset($_SESSION['success'])) {
+                			?>   
+                	<div class="alert alert-success">
+                		<?php 
+                				echo $_SESSION['success'];
+                				$_SESSION['success']=null;
+                		 ?> 
+                	</div>
+                <?php } ?>
                     <table class="data display datatable" id="example">
 					<thead>
 						<tr>
@@ -26,18 +24,18 @@
 					</thead>
 					<tbody>
 						<?php 
-							$show_cat = $cat->show_category();
-							if (isset($show_cat)) {
-								$i = 0;
-								while ($result = $show_cat->fetch_assoc()) {
-								$i++;
-						 ?>
+							if(!empty($this->dataView)){
+							foreach ($this->dataView as $key => $result) {
+						?>
 						<tr class="odd gradeX">
-							<td><?php echo $i; ?></td>
+							<td><?php echo $key+1; ?></td>
 							<td><?php echo $result['cat_name']; ?></td>
-							<td><a href="catedit.php?cat_id=<?php echo $result['cat_id']; ?>">Edit</a> || <a onclick="return confirm('Are you sure want to delete?');" href="catlist.php?cat_id=<?php echo $result['cat_id']; ?>">Delete</a></td>
+							<td><a href="?ct=cat&act=catedit&id=<?php echo $result['cat_id']; ?>">Edit</a> || 
+							<a onclick="return confirm('Are you sure want to delete?');" 
+							href="?ct=cat&act=catdel&id=<?php echo $result['cat_id']; ?>">Delete</a>
+							</td>
 						</tr>
-					<?php }} ?>
+						<?php }} ?>
 					</tbody>
 				</table>
                </div>
@@ -51,5 +49,5 @@
 	    setSidebarHeight();
 	});
 </script>
-<?php include 'inc/footer.php';?>
+<?php require_once 'Incad/footer.php';?>
 

@@ -9,9 +9,11 @@
     <link rel="stylesheet" type="text/css" href="Cssad/layout.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="Cssad/nav.css" media="screen" />
     <link href="Cssad/table/demo_page.css" rel="stylesheet" type="text/css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- BEGIN: load jquery -->
     <script src="Jsad/jquery-1.6.4.min.js" type="text/javascript"></script>
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
     <script type="text/javascript" src="Jsad/jquery-ui/jquery.ui.core.min.js"></script>
     <script src="Jsad/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
     <script src="Jsad/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
@@ -20,7 +22,6 @@
     <script src="Jsad/jquery-ui/jquery.ui.mouse.min.js" type="text/javascript"></script>
     <script src="Jsad/jquery-ui/jquery.ui.sortable.min.js" type="text/javascript"></script>
     <script src="Jsad/table/jquery.dataTables.min.js" type="text/javascript"></script>
-
     <script src="Jsad/setup.js" type="text/javascript"></script>
 	 <script type="text/javascript">
         $(document).ready(function () {

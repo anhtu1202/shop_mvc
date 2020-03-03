@@ -2,16 +2,18 @@
 <?php require_once 'Incad/sidebar.php';?>
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Category List</h2>
-                <div class="block">     
+                <h2>Pms List</h2>
+                <div class="block">  
+                	<?php 
+                		if (isset($_SESSION['success'])) {
+                			?>   
                 	<div class="alert alert-success">
                 		<?php 
-                			if (isset($_SESSION['success'])) {
                 				echo $_SESSION['success'];
                 				$_SESSION['success']=null;
-                			}
-                		 ?>
+                		 ?> 
                 	</div>
+                <?php } ?>
                     <table class="data display datatable" id="example">
 					<thead>
 						<tr>
@@ -30,7 +32,7 @@
 							<td><?php echo $result['name_pms']; ?></td>
 							<td><a href="?ct=pms&act=pmsedit&id=<?php echo $result['id']; ?>">Edit</a> || 
 							<a onclick="return confirm('Are you sure want to delete?');" 
-							href="?ct=pms&act=pmslist&id=<?php echo $result['id']; ?>">Delete</a>
+							href="?ct=pms&act=pmsdel&id=<?php echo $result['id']; ?>">Delete</a>
 							</td>
 						</tr>
 						<?php }} ?>

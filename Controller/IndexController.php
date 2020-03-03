@@ -35,23 +35,24 @@
 		if (isset($_SESSION['auth']['id_role']) == 1) {
 			$this->RenderView('admin.index', $data);
 		}
-		$objModel = new ProductModel();
-		$data['apple'] = $objModel->getLastedApple();
-		$data['samsung'] = $objModel->getLastedSamsung();
-		$data['dell'] = $objModel->getLastedDell();
-		$data['sony'] = $objModel->getLastedSony();
-		$data['slide'] = $objModel->getSlider();
+		$objProModel = new ProductModel();
+		$data['apple'] = $objProModel->getLastedApple();
+		$data['samsung'] = $objProModel->getLastedSamsung();
+		$data['dell'] = $objProModel->getLastedDell();
+		$data['sony'] = $objProModel->getLastedSony();
+		$data['slide'] = $objProModel->getSlider();
 		if(isset($_POST['signin'])){
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-			$objModel = new UserModel();
-			$userInfo = $objModel->loadLogin($email);
+			$objUserModel = new UserModel();
+			$userInfo = $objUserModel->loadLogin($email);
 		if(!empty($userInfo)){
 			if(password_verify($password, $userInfo['password'])) {
 				unset($userInfo['password']);
 
 				// Load danh sách các quyền được cấp
-				$pmsList = $objModel->loadPmsByRole($userInfo['id_role']);
+				$objPmsModel = new PmsModel(); 
+				$pmsList = $objPmsModel->loadPmsByRole($userInfo['id_role']);
 				// gán thêm vào mảng UserInfo để sử dụng ở hàm CHeckACL
 				$userInfo['list_pms'] = $pmsList;
 
@@ -77,12 +78,6 @@
 		}		
 
 	}
-
-	public function Cac()
-	{
-		die('ssssssssssssss');
-	}
-
 
 	public function Logout(){
 		if(!empty($_SESSION['auth'])){

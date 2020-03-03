@@ -3,27 +3,27 @@ require_once app_path.'/Model/PmsModel.php';
 class PmsController extends ControllerBase
 {
 
-	public function PmsList(){
+	public function Pmslist(){
 		$data =['msg'=>[] ];
 		$objPmsModel = new PmsModel(); // tạo đối tượng model
 		$data = $objPmsModel->getAllPms(); //gọi hàm trong model để lấy danh sách
 		$this->RenderView('admin.pmslist', $data);
 	}
 
-	public function PmsAdd(){
+	public function Pmsadd(){
 		$data =['msg'=>[] ];
 		$objPmsModel = new PmsModel(); // tạo đối tượng model
 		if (isset($_POST['submit'])) {
 			$pms = $_POST['pms'];
-			$data = $objPmsModel->pmsAdd($pms); //gọi hàm trong model để lấy danh sách
+			$res = $objPmsModel->pmsAdd($pms); //gọi hàm trong model để lấy danh sách
 			if ($data) {
-				$data['msg'] = $data;
+				$data['msg'] = $res;
 			}
 		}
 		$this->RenderView('admin.pmsadd', $data);
 	}
 	
-	public function PmsDel(){
+	public function Pmsdel(){
 		$objPmsModel = new PmsModel();
 		if (isset($_GET['id'])) {
 			$res = $objPmsModel->pmsDel($_GET['id']);
@@ -34,7 +34,7 @@ class PmsController extends ControllerBase
 		header('Location:' .base_path.'?ct=pms&act=pmslist');
 	}
 
-	public function PmsEdit(){
+	public function Pmsedit(){
 		$data =['msg'=>[] ];
 		$objPmsModel = new PmsModel(); // tạo đối tượng model
 		if (isset($_GET['id'])) {

@@ -10,7 +10,7 @@
 		public function loadPmsByRole($id_role){
 			$sql = "SELECT * FROM  $this->tb_pms
 
-			INNER JOIN $this->role_pms on tb_pms.id = role_pms.id_pms
+			INNER JOIN role_pms on tb_pms.id = role_pms.id_pms
 			WHERE role_pms.id_role = {$id_role}";
 
 			$res = $this->Query($sql);
@@ -43,12 +43,12 @@
 				$id_pms = $this->Query($sql)->fetch_assoc();
 				if ($id_pms) {
 					$id_pms = $id_pms['id'];
-					$sql = "INSERT INTO $this->role_pms VALUES (1,'$id_pms')";
+					$sql = "INSERT INTO role_pms VALUES (1,'$id_pms')";
 					$this->Insert($sql);
 				}
-				$alert = "<span class='alert-success'>Add success</span>";
-				return $alert;
 			}
+			$alert = "<span class='alert-success'>Add success</span>";
+				return $alert;
 		}
 
 		public function pmsDel($id)

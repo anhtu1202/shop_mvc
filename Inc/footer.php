@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			<div class="copy_right">
-				<p>Training with live project &amp; All rights Reseverd </p>
+				<p>&copy; Copyright Anh Tú &amp; All rights Reseverd </p>
 		   </div>
      </div>
     </div>

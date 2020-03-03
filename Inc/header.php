@@ -7,6 +7,9 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="css/menu.css" rel="stylesheet" type="text/css" media="all"/>
 	<script src="js/jquerymain.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
 	<script src="js/script.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
 	<script type="text/javascript" src="js/nav.js"></script>
@@ -43,24 +46,22 @@
   <div class="wrap">
 		<div class="header_top">
 			<div class="logo">
-				<a href="index.php"><img width="50%" src="Uploads/logo.png" alt="" /></a>
+				<a href="index.php"><img width="100%" src="Uploads/logo.png" alt="" /></a>
 			</div>
 			  <div class="header_top_right">
 			    <div class="search_box">
 				    <form action="search.php" method="post">
-				    	<input type="text" name="keywords" placeholder="Enter keywords"><input type="submit" value="Search">
+				    	<input type="text" name="keywords" placeholder="Tìm kiếm..."><input type="submit" value="Search">
 				    </form>
 			    </div>
-			    <div class="shopping_cart">
+			</div>
+		<div class="shopping_cart">
 					<div class="cart">
 						<a href="#" title="View my shopping cart" rel="nofollow">
 								<span class="no_product"></span>
 							</a>
 						</div>
-			      </div>
-		   		<div class="login"><a href="<?php echo base_path; ?>?act=login">Login</a></div>
-		 <div class="clear"></div>
-	 </div>
+			      </div>	
 	 <div class="clear"></div>
  </div>
 <div class="menu">
@@ -69,6 +70,7 @@
 	  <li><a href="products.php">Products</a> </li>
 	  <li><a href="topbrands.php">Top Brands</a></li>
 	  <li><a href="contact.php">Contact</a> </li>
+	  <li style="float: right;"><a href="<?php echo base_path; ?>?act=login">Login</a></li>
 	  <div class="clear"></div>
 	</ul>
 </div>

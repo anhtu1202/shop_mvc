@@ -39,19 +39,22 @@ body{
 }
 .logo{
 	float:left;
-	width:33%;
+	width:15%;
 }
 /**** Header Top Right ****/
 .header_top_right{
 	float:left;
-	width:67%;
-	margin-top:35px;
+	width:50%;
+	margin: auto; 
 }
 .search_box{
 	float:left;
+	margin: auto;
 	border: 1px solid #DBDBDB;
 	position:relative;
-	width:47%;
+	top: 60px;
+	left: 20px;
+	width:80%;
 }
 .search_box input[type="text"]{
 	width:74%;
@@ -91,9 +94,10 @@ body{
 }
 .shopping_cart{
 	float:left;
-	width: 202px;
+	width: 35%;
 	position:relative;
-	margin-left:15px;
+	top: 45px;
+	margin: 15px auto;
 	padding: 0 0 0 46px;
 	background: url(../images/header_cart.png) 0 0 no-repeat;
 	z-index: 99;

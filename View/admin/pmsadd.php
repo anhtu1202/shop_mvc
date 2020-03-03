@@ -4,7 +4,13 @@
             <div class="box round first grid">
                 <h2>Add New Pms</h2>
                <div class="block copyblock"> 
-                
+                <?php 
+                    if(!empty($this->dataView['msg'])){
+                ?>
+                <div class="alert alert-success">
+                   <?php echo $this->dataView['msg']; ?>
+                </div>
+            <?php } ?>
                  <form action="" method="post">
                     <table class="form">					
                         <tr>

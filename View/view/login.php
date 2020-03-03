@@ -1,53 +1,53 @@
 <?php 
 	require_once 'Inc/header.php'; 
-		require_once 'Inc/slider.php';
+	require_once 'Inc/slider.php';
  ?>
 <div class="main">
     <div class="content">
     	 <div class="login_panel">
-        	<h3>Existing Customers</h3>
+        	<h3>Đăng nhập</h3>
         	<p><?php 
 				if(!empty($this->dataView['msg'])){
 					echo $this->dataView['msg'];
 				}
 		 		?>	 	
 		 </p>
-        	<form action="" method="post" id="member">
-                	<input name="email" type="text" class="field" placeholder="Email" />
-                    <input name="password" type="password" class="field" placeholder="Password" />
-                 <p class="note">If you forgot your passoword just enter your email and click <a href="#">here</a></p>
-                    <div class="buttons"><div><button type="submit" name="signin" class="grey">Sign In</button></div></div>
+        	<form action="" method="post" id="member" class="form-group">
+                	<input name="email" class="form-control" type="text" class="field" placeholder="Email" />
+                    <input name="password" class="form-control" type="password" class="field" placeholder="Password" />
+                 <p class="note">Nếu bạn ko có tài khoản hãy đăng kí ở form bên cạnh!</p>
+                    <div class="buttons"><div><button type="submit" class="btn btn-info" name="signin" class="grey">Sign In</button></div></div>
             </form>        
                     </div>
     	<div class="register_account">
-    		<h3>Register New Account</h3>
+    		<h3>Đăng kí tài khoản mới !</h3>
     		
-    		<form action="" method="post">
+    		<form action="" method="post" class="form-group">
 		   			 <table>
 		   				<tbody>
 						<tr>
 						<td>
 							<div>
-							<input type="text" name="name" placeholder="Name" />
+							<input type="text" class="form-control" name="name" placeholder="Name" />
 							</div>
 							
 							<div>
-							   <input type="text" name="city" placeholder="City" />
+							   <input type="text" class="form-control" name="city" placeholder="City" />
 							</div>
 							
 							<div>
-								<input type="text" name="zipcode" placeholder="Zip-Code" />
+								<input type="text" class="form-control" name="zipcode" placeholder="Zip-Code" />
 							</div>
 							<div>
-								<input type="text" name="email" placeholder="Email" />
+								<input type="text" class="form-control" name="email" placeholder="Email" />
 							</div>
 		    			 </td>
 		    			<td>
 						<div>	
-							<input type="text" name="address" placeholder="Address" />
+							<input type="text" class="form-control" name="address" placeholder="Address" />
 						</div>
 		    		<div>
-						<select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
+						<select id="country" name="country" class="form-control" onchange="change_country(this.value)" class="frm-field required">
 							<option value="null">Select a Country</option>         
 							<option value="VN">Việt Nam</option>
 							<option value="USA">American</option>
@@ -57,17 +57,17 @@
 				 </div>		        
 	
 		           <div>
-		          <input type="text" name="phone" placeholder="Phone" />
+		          <input type="text" class="form-control" name="phone" placeholder="Phone" />
 		          </div>
 				  
 				  <div> 
-					<input type="text" name="password" placeholder="Password" />
+					<input type="text" class="form-control" name="password" placeholder="Password" />
 				</div>
 		    	</td>
 		    </tr> 
 		    </tbody></table> 
-		   <div class="search"><div><button type="submit" name="submit" class="grey">Create Account</button></div></div>
-		    <p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
+		   <div class="search"><div><button type="submit" name="submit" class="btn btn-info" class="grey">Create Account</button></div></div>
+		    <p class="terms">Bằng cách nhấp vào Create Account bạn đã đồng ý yêu cầu của <a href="#">Khả Nam &amp; Anh Tú</a>.</p>
 		    <div class="clear"></div>
 		    </form>
     	</div>  	

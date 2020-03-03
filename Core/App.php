@@ -22,7 +22,7 @@
 			$classCt = ucwords($classCt);
 			$classCt = str_replace(' ', '', $classCt);
 			$classCt = $classCt.'Controller';
-
+				
 			//Nhúng file controller
 			$file_controller = app_path.'/Controller/'.$classCt.'.php';
 			if (file_exists($file_controller)) {
@@ -43,12 +43,14 @@
 
 			if (method_exists($ObjCt, $actName)) {
 				$ObjCt->$actName();
+
 			} else {
 				header('Location: '.base_path);
 			}
 		}
 
 		public function CheckACL($controllerClass, $action){
+
 			// VD: Index.Logout, User.ListAll
 			// đây là controller action người dùng đang truy cập vào link
 			$ct = str_replace('Controller', '', $controllerClass);
@@ -59,6 +61,7 @@
 			// khai báo sẵn mảng các chức năng public không chặn quyền.
 			$arr_public_action = ['Index.Index',
 			'Index.Details','Index.Login'];
+
 			if(in_array($strCheck, $arr_public_action)){
 			return true;// các chức năng public thì luôn là true, ai cũng được phép vào không chặn quyền
 			}
@@ -72,10 +75,11 @@
 			}
 			// 2. Đã đăng nhập rồi == kiểm tra quyền, nếu có quyền thì return true, nếu không thì return false
 			$userInfo = $_SESSION['auth'];
+		
 			if(in_array($strCheck, $userInfo['list_pms'])){
-			return true;// Chức năng được cấp quyền trong db thì true
-			}else {
-				header('Location: '.base_path);
+				return false;// Chức năng được cấp quyền trong db thì true
+			} else {
+				header('Location:'. base_path);
 			}
 		}
 
