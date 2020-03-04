@@ -2,6 +2,7 @@
 	require_once app_path.'/Model/UserModel.php'; // nhúng file model vào để làm việc
 	require_once app_path.'/Model/ProductModel.php'; // nhúng file model vào để làm việc
 	require_once app_path.'/Model/PmsModel.php'; // nhúng file model vào để làm việc
+	require_once app_path.'/Model/BrandModel.php'; // nhúng file model vào để làm việc
 
 	class IndexController extends ControllerBase{
 
@@ -77,6 +78,21 @@
 			$this->RenderView('view.login', $data);
 		}		
 
+	}
+
+	public function Products()
+	{
+		$data =['brand'=>[], 'pro'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+		$objProModel = new ProductModel();
+		$objBrandModel = new BrandModel();
+		$data['brand'] = $objBrandModel->getAllBrand();
+		$data['pro'] = $objProModel->getAllPro();
+		$data['apple'] = $objProModel->getLastedApple();
+		$data['samsung'] = $objProModel->getLastedSamsung();
+		$data['dell'] = $objProModel->getLastedDell();
+		$data['sony'] = $objProModel->getLastedSony();
+		$data['slide'] = $objProModel->getSlider();
+		$this->RenderView('view.products', $data);
 	}
 
 	public function Logout(){

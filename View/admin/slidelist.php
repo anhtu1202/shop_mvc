@@ -1,16 +1,19 @@
-<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';
-	include '../classes/product.php';
-    $pro = new Product();
-    if (isset($_GET['slide_id'])) {
-		$slide_id = $_GET['slide_id'];
-		$del_slide = $pro->del_slide($slide_id);
-	}
-?>
+<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Slider List</h2>
         <div class="block">  
+        	<?php 
+                		if (isset($_SESSION['success'])) {
+                			?>   
+                	<div class="alert alert-success">
+                		<?php 
+                				echo $_SESSION['success'];
+                				$_SESSION['success']=null;
+                		 ?> 
+                	</div>
+                <?php } ?>
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
@@ -22,22 +25,19 @@
 			</thead>
 			<tbody>
 				<?php 
-					$get_all_slider = $pro->get_all_slider();
-						if ($get_all_slider) {
-							$i=0;
-							while ($result = $get_all_slider->fetch_assoc()) {
-							$i++;
+					if(!empty($this->dataView)){
+						foreach ($this->dataView as $key => $result) {
 				?>
 				<tr class="odd gradeX">
-					<td><?php echo $i; ?></td>
-					<td><h2><?php echo $result['slide_name']; ?></h2></td>
-					<td><img src="uploads/<?php echo $result['slide_image']; ?>" width="35%"/></td>				
+					<td><?php echo $key+1; ?></td>
+					<td><?php echo $result['slide_name']; ?></td>
+					<td><img width="35%" src="<?php echo $result['slide_image']; ?>"/></td>				
 				<td>
-					<a href="slideedit.php?slide_id=<?php echo $result['slide_id']; ?>">Edit</a> || 
-					<a onclick="return confirm('Are you sure to Delete!');" href="?slide_id=<?php echo $result['slide_id']; ?>" >Delete</a> 
+					<a href="?ct=slide&act=slideedit&id=<?php echo $result['slide_id']; ?>">Edit</a> || 
+					<a onclick="return confirm('Are you sure to Delete!');" href="?ct=slide&act=slidedel&id=<?php echo $result['slide_id']; ?>" >Delete</a> 
 				</td>
 					</tr>	
-				<?php }} ?>	
+				<?php }} ?>
 			</tbody>
 		</table>
 
@@ -52,4 +52,4 @@
 		setSidebarHeight();
     });
 </script>
-<?php include 'inc/footer.php';?>
+<?php require_once 'Incad/footer.php';?>

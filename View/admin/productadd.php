@@ -1,25 +1,19 @@
-﻿<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
-<?php 
-    include '../classes/category.php';
-    include '../classes/brand.php';
-    include '../classes/product.php';
-    $product = new Product();
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-        
-        $insert_product = $product->insert_product($_POST,$_FILES);
-    }
- ?>
+﻿<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Add New Product</h2>
         <div class="block">    
-        <?php 
-                    if (isset($insert_product)) {
-                        echo $insert_product;
-                    }
-                 ?>           
-         <form action="productadd.php" method="post" enctype="multipart/form-data">
+         <div class="block copyblock"> 
+                <?php 
+                    if(!empty($this->dataView['msg'])){
+                ?>
+                <div class="alert alert-success">
+                   <?php echo $this->dataView['msg']; ?>
+                </div>
+            <?php } ?>           
+         <form action="" method="post" class="form-group" enctype="multipart/form-data" onsubmit="return Regex()">
             <table class="form">
                
                 <tr>
@@ -27,7 +21,7 @@
                         <label>Name</label>
                     </td>
                     <td>
-                        <input type="text" name="product_name" placeholder="Enter Product Name..." class="medium" />
+                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter Product Name..." class="medium" />
                     </td>
                 </tr>
 				<tr>
@@ -35,16 +29,14 @@
                         <label>Category</label>
                     </td>
                     <td>
-                        <select id="select" name="category">
+                        <select id="select" name="category" class="form-control">
                             <option>--- Select Category ---</option>
-                            <?php 
-                                    $cat = new category();
-                                    $show_cat = $cat->show_category();
-                                    if (isset($show_cat)) {
-                                        while ($result = $show_cat->fetch_assoc()) {
-                                 ?>
-                                    <option value="<?php echo $result['cat_id']; ?>">
-                                        <?php echo $result['cat_name']; ?>
+                                <?php 
+                                    if(!empty($this->dataView['cat'])){
+                                        foreach ($this->dataView['cat'] as $key => $valuecat) {
+                                    ?>
+                                    <option value="<?php echo $valuecat['cat_id']; ?>">
+                                        <?php echo $valuecat['cat_name']; ?>
                                     </option>
                                 <?php }} ?>
                         </select>
@@ -55,18 +47,16 @@
                         <label>Brand</label>
                     </td>
                     <td>
-                        <select id="select" name="brand">
+                        <select id="select" name="brand" class="form-control">
                             <option>--- Select Brand ---</option>
-                            <?php 
-                                    $brand = new Brand();
-                                    $show_brand = $brand->show_brand();
-                                    if (isset($show_brand)) {
-                                        while ($resultb = $show_brand->fetch_assoc()) {
+                                <?php 
+                                    if(!empty($this->dataView['brand'])){
+                                        foreach ($this->dataView['brand'] as $key => $valuebrand) {
                                  ?>
-                                    <option value="<?php echo $resultb['brand_id']; ?>">
-                                        <?php echo $resultb['brand_name']; ?>
+                                    <option value="<?php echo $valuecat['brand_id']; ?>">
+                                        <?php echo $valuecat['brand_name']; ?>
                                     </option>
-                                <?php }} ?>
+                            
                         </select>
                     </td>
                 </tr>
@@ -76,7 +66,7 @@
                         <label>Description</label>
                     </td>
                     <td>
-                        <textarea class="tinymce" name="product_desc"></textarea>
+                        <textarea class="tinymce" name="product_desc" rows="5" cols="60" class="form-control"></textarea>
                     </td>
                 </tr>
 				<tr>
@@ -84,7 +74,7 @@
                         <label>Price</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="Enter Price..." name="product_price" class="medium" />
+                        <input type="text" id="price" placeholder="Enter Price..." name="product_price" class="medium" class="form-control" />
                     </td>
                 </tr>
             
@@ -93,7 +83,7 @@
                         <label>Upload Image</label>
                     </td>
                     <td>
-                        <input type="file" name="image" />
+                        <input type="file" name="image" class="form-control" />
                     </td>
                 </tr>
 				
@@ -102,7 +92,7 @@
                         <label>Product Type</label>
                     </td>
                     <td>
-                        <select id="select" name="product_type">
+                        <select id="select" class="form-control" name="product_type">
                             <option value="Featured">Featured</option>
                             <option value="Non-Featured">Non-Featured</option>
                         </select>
@@ -112,7 +102,7 @@
 				<tr>
                     <td></td>
                     <td>
-                        <input type="submit" name="submit" Value="Save" />
+                        <input type="submit" class="btn btn-primary" name="submit" Value="Save" />
                     </td>
                 </tr>
             </table>
@@ -131,6 +121,32 @@
     });
 </script>
 <!-- Load TinyMCE -->
-<?php include 'inc/footer.php';?>
+<script>
+    function Regex() {
+        var i;
+                var control = document.getElementsByClassName('form-control');
+                var length = document.getElementsByClassName('form-control').length;
+
+                for (i = 0; i < length; i++) {
+                    var data = control[i].value;
+                    if (data == ''){
+                        alert('Bạn cần nhập đầy đủ giá trị!');
+                        return false;
+                    }
+                }
+
+                var product_name = document.getElementById('product_name').value;
+                var price = document.getElementById('price').value;
+                if (!isNaN(product_name)) {
+                    alert('Hãy nhập tên sản phẩm dạng chuỗi');
+                     return false;
+                } else if (isNaN(price)) {
+                    alert('Hãy nhập price dạng số');
+                    return false;
+                }
+    }
+</script>
+<?php require_once 'Incad/footer.php';?>
+
 
 

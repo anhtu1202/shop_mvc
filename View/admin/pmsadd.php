@@ -11,11 +11,11 @@
                    <?php echo $this->dataView['msg']; ?>
                 </div>
             <?php } ?>
-                 <form action="" method="post">
+                 <form action="" method="post" onsubmit="return Regex()">
                     <table class="form">					
                         <tr>
                             <td>
-                                <input type="text" name="pms" placeholder="Enter Category Pms..." class="medium" />
+                                <input type="text" id="pms" name="pms" placeholder="Enter Category Pms..." class="medium" />
                             </td>
                         </tr>
 						<tr> 
@@ -35,5 +35,17 @@
         $('.datatable').dataTable();
         setSidebarHeight();
     });
+</script>
+<script>
+    function Regex() {
+            var pms = document.getElementById('pms').value;
+            if (!pms) {
+                alert( 'Hãy nhập đầy đủ dữ liệu' );
+                return false;
+            } else if (!isNaN(pms)) {
+                alert('Hãy nhập dữ liệu dạng chuỗi');
+                return false;
+            }
+        }
 </script>
 <?php require_once 'Incad/footer.php';?>

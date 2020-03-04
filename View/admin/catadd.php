@@ -11,16 +11,16 @@
                    <?php echo $this->dataView['msg']; ?>
                 </div>
             <?php } ?>
-                 <form action="" method="post">
+                 <form action="" method="post" onsubmit="return Regex()">
                     <table class="form">                    
                         <tr>
                             <td>
-                                <input type="text" name="cat_name" placeholder="Enter Category Cat..." class="medium" />
+                                <input type="text" id="cat_name" name="cat_name" placeholder="Enter Category Cat..." class="medium" />
                             </td>
                         </tr>
                         <tr> 
                             <td>
-                                <input type="submit" name="submit" Value="Save" />
+                                <input type="submit" id="save" name="submit" Value="Save" />
                             </td>
                         </tr>
                     </table>
@@ -35,5 +35,17 @@
         $('.datatable').dataTable();
         setSidebarHeight();
     });
+</script>
+<script>
+    function Regex() {
+            var name = document.getElementById('cat_name').value;
+            if (!name) {
+                alert( 'Hãy nhập đầy đủ dữ liệu' );
+                return false;
+            } else if (!isNaN(name)) {
+                alert('Hãy nhập dữ liệu dạng chuỗi');
+                return false;
+            }
+        }
 </script>
 <?php require_once 'Incad/footer.php';?>

@@ -1,14 +1,7 @@
-<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';
-    include '../classes/category.php';
-    include '../classes/brand.php';
-    $brand = new Brand();
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $brand_name = $_POST['brand_name'];
-        $category = $_POST['category'];
-        $insert_brand = $brand->insert_brand($brand_name,$category);
-    }
-?>
+<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
+   
+
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Add New Brand</h2>
@@ -19,7 +12,7 @@
                     }
                  ?>
                  <form action="brandadd.php" method="post">
-                    <table class="form">					
+                    <table class="form">                    
                         <tr>
                             <td>
                                 <label>Brand :</label>
@@ -30,14 +23,12 @@
                             <td>
                                 <label>Category :</label>
                                 <select name="category">
-                                    <?php 
-                                    $cat = new category();
-                                    $show_cat = $cat->show_category();
-                                    if (isset($show_cat)) {
-                                        $i = 0;
-                                        while ($result = $show_cat->fetch_assoc()) {
-                                        $i++;
-                                 ?>
+                                   <?php 
+                            if(!empty($this->dataView)){
+
+                            foreach ($this->dataView['cat'] as $key=> $result) {
+
+                        ?>
                                     <option value="<?php echo $result['cat_id']; ?>">
                                         <?php echo $result['cat_name']; ?>
                                     </option>
@@ -45,7 +36,7 @@
                                 </select>
                             </td>
                         </tr>
-						<tr> 
+                        <tr> 
                             <td>
                                 <input type="submit" name="submit" Value="Save" />
                             </td>
@@ -55,4 +46,4 @@
                 </div>
             </div>
         </div>
-<?php include 'inc/footer.php';?>
+<?php require_once 'Incad/footer.php';?>

@@ -1,30 +1,13 @@
-<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
-<?php 
-    include '../classes/product.php';
-    $pro = new Product();
-    if (isset($_GET['slide_id'])) {
-        $slide_id = $_GET['slide_id'];
-    }else{
-        echo "<script>window.location = 'productlist.php';</script>";
-    }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-        $update_slide = $pro->update_slide($_POST,$_FILES,$slide_id);
-    }
- ?>
-<div class="grid_10">
-    <div class="box round first grid">
-        <h2>Edit Product</h2>
-        <div class="block">    
-        <?php 
-                    if (isset($update_slide)) {
-                        echo $update_slide;
-                    }
-
-                    $get_edit_slide = $pro->get_edit_slide($slide_id);
-                    if (isset($get_edit_slide)) {
-                        while ($result = $get_edit_slide->fetch_assoc()) {
-                 ?>           
+<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
+        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>Edit Slide</h2>
+               <div class="block copyblock"> 
+                <?php 
+                    if(!empty($this->dataView)){
+                       $result = $this->dataView;
+                 ?>          
          <form action="" method="post" enctype="multipart/form-data">
             <table class="form">
                
@@ -33,7 +16,7 @@
                         <label>Name</label>
                     </td>
                     <td>
-                        <input type="text" name="product_name" value="<?php echo $result['slide_name']; ?>" placeholder="Enter Slider Name..." class="medium" />
+                        <input type="text" name="slide_name" value="<?php echo $result['slide_name']; ?>" placeholder="Enter Slider Name..." class="medium" />
                     </td>
                 </tr>
             
@@ -42,7 +25,7 @@
                         <label>Upload Image</label>
                     </td>
                     <td>
-                        <img width="100" height="100" src="./uploads/<?php echo $result['slide_image']; ?>">
+                        <img width="100" height="100" src="<?php echo $result['slide_image']; ?>">
                         <input type="file" name="image" />
                     </td>
                 </tr>
@@ -71,7 +54,7 @@
                 </tr>
             </table>
             </form>
-            <?php }} ?>
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -86,6 +69,6 @@
     });
 </script>
 <!-- Load TinyMCE -->
-<?php include 'inc/footer.php';?>
+<?php require_once 'Incad/footer.php';?>
 
 

@@ -1,5 +1,7 @@
 <?php 
+require_once app_path.'/Model/CatModel.php';
 require_once app_path.'/Model/BrandModel.php';
+
 class BrandController extends ControllerBase
 {
 
@@ -11,16 +13,18 @@ class BrandController extends ControllerBase
 	}
 
 	public function Brandadd(){
-		$data =['msg'=>[] ];
+		$data =['msg'=>[] ,'cat'=>[] ];
 		$objBrandModel = new BrandModel(); // tạo đối tượng model
+		$objCatModel = new CatModel();
+		$data['cat']=$objCatModel->getAllCat();
 		if (isset($_POST['submit'])) {
-			$Brand_name = $_POST['brand_name'];
-			$res = $objBrandModel->brandAdd($Brand); //gọi hàm trong model để lấy danh sách
+			$brand_name = $_POST['brand_name'];
+			$res = $objBrandModel->brandAdd($brand_name); //gọi hàm trong model để lấy danh sách
 			if ($res) {
 				$data['msg'] = $res;
 			}
 		}
-		$this->RenderView('admin.Brandadd', $data);
+		$this->RenderView('admin.brandadd', $data);
 	}
 	
 	public function Branddel(){
@@ -31,15 +35,24 @@ class BrandController extends ControllerBase
 				$_SESSION['success'] = $res;
 			}
 		}
-		header('LoBrandion:' .base_path.'?ct=brand&act=brandlist');
+		header('Location:' .base_path.'?ct=brand&act=brandlist');
 	}
 
 	public function Brandedit(){
-		$data =['msg'=>[] ];
-		$objBrandModel = new BrandModel(); // tạo đối tượng model
+
+		$data =['msg'=>[],'brand'=>[],'cat'=>[]];
+		$objBrandModel = new BrandModel();
+		$objCatModel= new CatModel();
+ 	
+		 // tạo đối tượng model
 		if (isset($_GET['id'])) {
+			
 			$id = $_GET['id'];
-			$data = $objBrandModel->getBrand($id); //gọi hàm trong model để lấy danh sách
+
+			$data['brand'] = $objBrandModel->getBrand($id); //gọi hàm trong model để lấy danh sách
+			$data['cat']=$objCatModel->getAllCat();
+
+
 			if (isset($_POST['submit'])) {
 				$res = $objBrandModel->BrandEdit($id,$_POST['brand_name']); 
 				if ($res) {

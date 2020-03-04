@@ -67,10 +67,15 @@
 <div class="menu">
 	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
 	  <li><a href="<?php echo base_path; ?>">Home</a></li>
-	  <li><a href="products.php">Products</a> </li>
+	  <li><a href="?act=products">Products</a> </li>
 	  <li><a href="topbrands.php">Top Brands</a></li>
-	  <li><a href="contact.php">Contact</a> </li>
+	  <li><a href="">Contact</a> </li>
+	  <?php if (isset($_SESSION['auth'])) {
+	  	?>
+	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout</a></li>
+	  <?php } else { ?>	 
 	  <li style="float: right;"><a href="<?php echo base_path; ?>?act=login">Login</a></li>
+	<?php } ?>
 	  <div class="clear"></div>
 	</ul>
 </div>

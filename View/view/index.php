@@ -12,9 +12,9 @@
     		<div class="clear"></div>
     	</div>
 	      <div class="section group">
-	     		<?php 
-			if(!empty($this->dataView)){
-			foreach ($this->dataView['fea'] as $key => $result) {
+	     	<?php 
+				if(!empty($this->dataView)){
+				foreach ($this->dataView['fea'] as $key => $result) {
 			 ?>
 				<div class="grid_1_of_4 images_1_of_4">
 					 <a href="?act=details&product_id=<?php echo $result['product_id']; ?>">

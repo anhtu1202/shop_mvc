@@ -8,8 +8,9 @@
 
 		public function getAllBrand()
 		{
-			$sql = "SELECT * FROM $this->brand ORDER BY brand_id DESC";
+			$sql = "SELECT * FROM $this->brand  INNER JOIN category ON brand.cat_id = category.cat_id ORDER BY brand_id DESC";
 
+							
 			$res = $this->Query($sql);
 			$data = [];
 			while($row = $res->fetch_assoc()){
@@ -42,6 +43,8 @@
 		{
 			$sql = "SELECT * FROM $this->brand WHERE brand_id = '$id'";
 			$res = $this->Query($sql)->fetch_assoc();
+			
+
 			if ($res) {
 				return $res;
 			}
@@ -51,6 +54,7 @@
 		{
 			$sql = "UPDATE $this->brand SET brand_name = '$brand_name' WHERE brand_id = '$id'";
 			$res = $this->Update($sql);
+
 			if ($res) {
 				$alert = "<span class='alert-success'>Update success</span>";
 				return $alert;

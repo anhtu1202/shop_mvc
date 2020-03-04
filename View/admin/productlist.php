@@ -1,20 +1,20 @@
-﻿<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
-<?php include '../classes/product.php';
-	$product = new Product();
-	$show_product = $product->show_product();
-	if (isset($_GET['product_id'])) {
-		$product_id = $_GET['product_id'];
-		$del_product = $product->del_product($product_id);
-	}
- ?>
+﻿<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Product List</h2>
         <div class="block">  
-        	<?php if (isset($del_product)) {
-        		echo $del_product;
-        	} ?>
+			<?php 
+                	if (isset($_SESSION['success'])) {
+                			?>   
+                	<div class="alert alert-success">
+                		<?php 
+                				echo $_SESSION['success'];
+                				$_SESSION['success']=null;
+                		 ?> 
+                	</div>
+                <?php } ?>
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
@@ -30,22 +30,21 @@
 			</thead>
 			<tbody>
 				<?php 
-					if (isset($show_product)) {
-						$i = 0;
-						while ($result = $show_product->fetch_assoc()) {
-							$i++;
-				 ?>
+					if(!empty($this->dataView)){
+					foreach ($this->dataView as $key => $result) {
+				?>
 				<tr class="odd gradeX">
-					<td><?php echo $i; ?></td>
+					<td><?php echo $key+1 ?></td>
 					<td><?php echo $result['product_name']; ?></td>
 					<td>
-						<img width="100" height="100" src="uploads/<?php echo $result['product_image']; ?>">
+						<img width="100" height="100" src="<?php echo $result['product_image']; ?>">
 					</td>
 					<td><?php echo $result['product_price']; ?></td>
 					<td class="center"><?php echo $result['brand_name']; ?></td>
 					<td class="center"><?php echo $result['cat_name']; ?></td>
 					<td class="center"><?php echo $result['product_type']; ?></td>
-					<td><a href="productedit.php?product_id=<?php echo $result['product_id']; ?>">Edit</a> || <a href="productlist.php?product_id=<?php echo $result['product_id']; ?>">Delete</a></td>
+					<td><a href="?ct=product&act=productedit&id=<?php echo $result['product_id']; ?>">Edit</a> || 
+						<a href="?ct=product&act=productdel&id=<?php echo $result['product_id']; ?>">Delete</a></td>
 				</tr>
 			<?php }} ?>
 			</tbody>
@@ -62,4 +61,4 @@
 		setSidebarHeight();
     });
 </script>
-<?php include 'inc/footer.php';?>
+<?php require_once 'Incad/footer.php';?>

@@ -60,7 +60,7 @@
 
 			// khai báo sẵn mảng các chức năng public không chặn quyền.
 			$arr_public_action = ['Index.Index',
-			'Index.Details','Index.Login'];
+			'Index.Details','Index.Login','Index.Products'];
 
 			if(in_array($strCheck, $arr_public_action)){
 			return true;// các chức năng public thì luôn là true, ai cũng được phép vào không chặn quyền
@@ -75,7 +75,6 @@
 			}
 			// 2. Đã đăng nhập rồi == kiểm tra quyền, nếu có quyền thì return true, nếu không thì return false
 			$userInfo = $_SESSION['auth'];
-		
 			if(in_array($strCheck, $userInfo['list_pms'])){
 				return false;// Chức năng được cấp quyền trong db thì true
 			} else {

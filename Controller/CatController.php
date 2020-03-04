@@ -15,7 +15,7 @@ class CatController extends ControllerBase
 		$objCatModel = new CatModel(); // tạo đối tượng model
 		if (isset($_POST['submit'])) {
 			$cat_name = $_POST['cat_name'];
-			$res = $objCatModel->catAdd($Cat); //gọi hàm trong model để lấy danh sách
+			$res = $objCatModel->catAdd($cat_name); //gọi hàm trong model để lấy danh sách
 			if ($res) {
 				$data['msg'] = $res;
 			}
@@ -44,7 +44,7 @@ class CatController extends ControllerBase
 				$res = $objCatModel->catEdit($id,$_POST['cat_name']); 
 				if ($res) {
 					$_SESSION['success'] = $res;
-				
+					header('Location:' .base_path.'?ct=cat&act=catlist');
 				}
 			}
 		}

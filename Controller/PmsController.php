@@ -10,6 +10,21 @@ class PmsController extends ControllerBase
 		$this->RenderView('admin.pmslist', $data);
 	}
 
+	public function Rolelist(){
+		$data =['msg'=>[] ];
+		$objPmsModel = new PmsModel(); // tạo đối tượng model
+		if (isset($_POST['submit'])) {
+				$id_role = $_POST['role'];
+				$id_pms = $_POST['pms'];
+				$succes = $objPmsModel->addRolePms($role,$pms);
+				$data['msg'] = $succes;
+			}
+		$data['role_pms'] = $objPmsModel->getAllRolePms();
+		$data['role'] = $objPmsModel->getAllRole();
+		$data['pms']= $objPmsModel->getAllPms();
+		$this->RenderView('admin.rolepms', $data);
+	}
+
 	public function Pmsadd(){
 		$data =['msg'=>[] ];
 		$objPmsModel = new PmsModel(); // tạo đối tượng model
@@ -50,4 +65,6 @@ class PmsController extends ControllerBase
 		}
 		$this->RenderView('admin.pmsedit', $data); 
 	}
+
+	
 }

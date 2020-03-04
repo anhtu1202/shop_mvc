@@ -69,16 +69,5 @@ require_once app_path.'/Sendmail/sendmail.php';
 			return null ;
 		}
 
-		public function getAllPms(){
-
-		$sql = "SELECT * FROM $this->tb_pms";
-		$res = $this->Query($sql);
-		$data = [];
-		while($row = $res->fetch_assoc()){
-		$data[] = $row;
-		}
-		return $data;
-		}
-
 
 	}
