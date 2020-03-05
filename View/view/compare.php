@@ -29,7 +29,7 @@
 							<tr>
 								<td><?php echo $i; ?></td>
 								<td><?php echo $result['product_name']; ?></td>
-								<td><img src="admin/uploads/<?php echo $result['product_image']; ?>" alt=""/></td>
+								<td><img src="<?php echo $result['product_image']; ?>" alt=""/></td>
 								<td><?php echo number_format($result['product_price']); ?> VNĐ</td>
 								<td><a href="details.php?product_id=<?php echo $result['product_id']; ?>">View</a></td>
 							</tr>

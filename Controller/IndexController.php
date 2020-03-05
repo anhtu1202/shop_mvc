@@ -7,7 +7,7 @@
 	class IndexController extends ControllerBase{
 
 	public function Index(){
-		$data =['fea'=>[], 'new'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+		$data =['fea'=>[], 'new'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ,'details'=>[]];
 		$objModel = new ProductModel();
 		$data['fea'] = $objModel->getFeaPro();
 		$data['new'] = $objModel->getNewPro();
@@ -16,6 +16,7 @@
 		$data['dell'] = $objModel->getLastedDell();
 		$data['sony'] = $objModel->getLastedSony();
 		$data['slide'] = $objModel->getSlider();
+		$data['details']=$objModel->getAllPro();
 		$this->RenderView('view.index', $data);
 	}
 
@@ -42,6 +43,7 @@
 		$data['dell'] = $objProModel->getLastedDell();
 		$data['sony'] = $objProModel->getLastedSony();
 		$data['slide'] = $objProModel->getSlider();
+		$data['details']=$objProModel->getAllPro();
 		if(isset($_POST['signin'])){
 			$email = $_POST['email'];
 			$password = $_POST['password'];
@@ -102,4 +104,14 @@
 		header('Location:'.base_path);
 		}
 
-}
+
+	public function Details(){
+		$data =[];
+		if(isset($_GET['product_id'])){
+		$objProModel = new ProductModel();
+		$data = $objProModel->getProduct($_GET['product_id']);
+		}
+		$this->RenderView('view.details', $data);
+		}
+		
+}		
