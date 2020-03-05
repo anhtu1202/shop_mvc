@@ -1,15 +1,6 @@
 <?php 
-		include 'inc/header.php'; 
-		$customer_id = Session::get("customer_id");
-		if (empty($customer_id)) {
-			header('Location:login.php');
-		}
-
-		$ct = new cart();
-		if (isset($_GET['confirm_id'])) {
-	    $confirm_id = $_GET['confirm_id'];
-	    $shipted_confirm = $ct->shipted_confirm($confirm_id);
-	    }
+		include 'Inc/header.php'; 
+		
 ?>	
 <style type="text/css">
 	.box{
@@ -39,14 +30,7 @@
 								<th width="15%">Day</th>
 								<th width="7%">Action</th>
 							</tr>
-							<?php 
-								$customer_id = Session::get("customer_id");
-								$get_product_cart_order = $ct->get_product_cart_order($customer_id);
-								if ($get_product_cart_order) {
-									$i = 0;
-									while ($result = $get_product_cart_order->fetch_assoc()) {
-										$i++;
-							 ?>
+							
 							<tr>
 								<td><?php echo $i; ?></td>
 								<td><?php echo $result['product_name']; ?></td>
@@ -58,10 +42,7 @@
 								}else if ($result['status'] == 1){
 								?>
 								Shipped...
-								<?php	
-								}else{
-									echo "Received";
-								} ?>
+								
 								</td>
 								<td><?php echo $fm->formatDate($result['day']); ?></td>
 								<td>

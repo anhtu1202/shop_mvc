@@ -12,10 +12,12 @@ require_once 'Helper/SimpleImage.php';
 			$sql = "SELECT * FROM product
 			INNER JOIN brand ON product.brand_id=brand.brand_id
 			INNER JOIN category ON product.cat_id=category.cat_id
-			ORDER BY product_id";
+			ORDER BY product_id" ;
 
 			$res = $this->Query($sql);
 			$data = [];
+			
+
 			while($row = $res->fetch_assoc()){
 				$data[] = $row;
 			}
@@ -83,8 +85,23 @@ require_once 'Helper/SimpleImage.php';
 			$sql = "SELECT * FROM product WHERE product_id = '$id'";
 			$res = $this->Query($sql)->fetch_assoc();
 			if ($res) {
+
 				return $res;
 			}
+
+		}
+
+		public function getProduct($id){
+			$sql = "SELECT * FROM product
+			INNER JOIN brand ON product.brand_id=brand.brand_id
+			INNER JOIN category ON product.cat_id=category.cat_id
+			ORDER BY product_id" ;
+			$res = $this->Query($sql)->fetch_assoc();
+			if ($res) {
+
+				return $res;
+			}
+
 		}
 
 		public function proEdit($id,$data,$files)

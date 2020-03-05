@@ -43,7 +43,7 @@
 					 <h2><?php $vv = $result['product_name']; ?></h2>
 					 <p><?php echo $fm->textShorten($result['product_desc'],30) ?></p>
 					 <p><span class="price"><?php echo number_format($result['product_price']); ?> VNĐ</span></p>
-				     <div class="button"><span><a href="details.php?product_id=<?php echo $result['product_id']; ?>" class="details">Details</a></span></div>
+				     <div class="button"><span><a href="?act=details&product_id=<?php echo $result['product_id']; ?>" class="details">Details</a></span></div>
 				</div>
 				<?php }} ?>
 			</div>
