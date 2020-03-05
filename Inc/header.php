@@ -46,11 +46,11 @@
   <div class="wrap">
 		<div class="header_top">
 			<div class="logo">
-				<a href="index.php"><img width="100%" src="Uploads/logo.png" alt="" /></a>
+				<a href="<?php echo base_path; ?>"><img width="100%" src="Uploads/logo.png" alt="" /></a>
 			</div>
 			  <div class="header_top_right">
 			    <div class="search_box">
-				    <form action="search.php" method="post">
+				    <form action="" method="post">
 				    	<input type="text" name="keywords" placeholder="Tìm kiếm..."><input type="submit" value="Search">
 				    </form>
 			    </div>

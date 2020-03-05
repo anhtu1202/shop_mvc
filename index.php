@@ -11,7 +11,7 @@ session_start();
   header("Cache-Control: max-age=2592000");
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 	define('app_path',__DIR__);
-	define('base_path', '/shop_mvc');
+	define('base_path', '/lab/shopbanhang');
 	
 	require_once app_path.'/Core/App.php';
 	require_once app_path.'/Core/DB.php';

@@ -3,6 +3,7 @@
 	require_once app_path.'/Model/ProductModel.php'; // nhúng file model vào để làm việc
 	require_once app_path.'/Model/PmsModel.php'; // nhúng file model vào để làm việc
 	require_once app_path.'/Model/BrandModel.php'; // nhúng file model vào để làm việc
+	require_once app_path.'/Model/CatModel.php';
 
 	class IndexController extends ControllerBase{
 
@@ -114,10 +115,13 @@
 
 
 	public function Details(){
-		$data =[];
+		$data =[ 'pro'=>[], 'cat'=>[] ];
 		if(isset($_GET['product_id'])){
 		$objProModel = new ProductModel();
-		$data = $objProModel->getProduct($_GET['product_id']);
+		$objCatModel = new CatModel();
+
+		$data['pro'] = $objProModel->getProduct($_GET['product_id']);
+		$data['cat'] = $objCatModel->getAllCat();
 		}
 		$this->RenderView('view.details', $data);
 		}

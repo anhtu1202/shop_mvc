@@ -1,13 +1,27 @@
 <?php 
 		include 'Inc/header.php'; 
 		
-                    if(!empty($this->dataView)){
-                       $result = $this->dataView;
+                    if(!empty($this->dataView['pro'])){
+                       $result = $this->dataView['pro'];
                  ?>
  <div class="main">
     <div class="content">
     	<div class="section group">
-    		
+    		<div class="rightsidebar span_3_of_1" style="position: absolute; right: 150px;">
+					<h2>CATEGORIES</h2>
+					<ul>
+						<?php
+						if(!empty($this->dataView['cat'])){
+                       	  	foreach ($this->dataView['cat'] as $key => $value) {
+                		 ?>
+				     	<li>				      	
+				    <a href="?cat_id=<?php echo $value['cat_id']; ?>"><?php echo $value['cat_name']; ?></a>
+				      </li>
+				 <?php }} ?>
+    				</ul>
+    	
+ 				</div>
+
 				<div class="cont-desc span_1_of_2">				
 					<div class="grid images_3_of_2">
 						<img width="180" height="250" src="<?php echo $result['product_image']; ?>" alt="" />
@@ -52,15 +66,6 @@
 	    </div>
 		<?php } ?>
 	</div>
-				<div class="rightsidebar span_3_of_1">
-					<h2>CATEGORIES</h2>
-					<ul>
-						
-				      <li><a href="?cat_id=<?php echo $result['cat_id']; ?>"><?php echo $result['cat_name']; ?></a></li>
-				 
-    				</ul>
-    	
- 				</div>
  		</div>
  	</div>
 
