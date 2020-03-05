@@ -24,11 +24,17 @@
 
 		$data =['err'=>[], 'msg'=>[]];
 		$objModel = new UserModel();
-		if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){				
-			$succes = $objModel->addUser($_POST);
-
+		if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){	
+			if ($_POST['captcha'] == $_SESSION['captcha']){
+       			$succes = $objModel->addUser($_POST);
+	       		if(!empty($succes)){
+					$data['msg'] = $succes;
+				}
+   			 }else {
+   			 	$data['msg'] = 'Mã captcha ko đúng!';
+   		 	}			
 		}	
-		$this->RenderView('user.regis', $data);
+		$this->RenderView('view.login', $data);
 	}
 
 	public function Login(){
@@ -94,6 +100,8 @@
 		$data['slide'] = $objProModel->getSlider();
 		$this->RenderView('view.products', $data);
 	}
+
+	
 
 	public function Logout(){
 		if(!empty($_SESSION['auth'])){

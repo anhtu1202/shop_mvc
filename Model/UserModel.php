@@ -11,50 +11,63 @@ require_once app_path.'/Sendmail/sendmail.php';
 		public function addUser($post){
 		
 			$name = $post['name'];
-			$pass = $post['pass'];
-			$cp = $post['cp'];
-			$fullname = $post['fullname'];
+            $pass = $post['cppassword'];
+            $address = $post['address'];
 			$email = $post['email'];
 			$phone = $post['phone'];
 
 			$check = '/^\w{6,9}$/';
-			$checkcp = '/^([a-z]{1,})\w{7,14}$/';
+			$checkcp = '/^[a-zA-Z0-9]{8,15}$/';
 			$checkfn = '/^[a-zA-Z]$/';
 			$regex_phone = '/((09|03|07|08|05)+([0-9]{8})\b)/';
-			$regex_email = '/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/'; 
+			$regex_email = '/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/';
 
 			$sql = "SELECT * FROM  $this->customer WHERE name = '$name'";
 			$res = $this->Query($sql);
 			$sqle = "SELECT * FROM  $this->customer WHERE email = '$email'";
 			$rese = $this->Query($sqle);
 		if (!preg_match($check, $name)) {
-			$alert = "<span class='alert-success'>Tên tài khoản sai định dạng</span>";
+			$alert = "<span class='alert-success'>Tên tài khoản phải từ 6 đến 9 kí tự!</span>";
 				return $alert;
 		} else if (!preg_match($checkcp, $cp)) {
-			$alert = "<span class='alert-success'>Mật khẩu sai định dạng</span>";
+			$alert = "<span class='alert-success'>Password không được chứa kí tự đặc biệt dài từ 8-15 kí tự!</span>";
 				return $alert;
 		} else if (!preg_match($regex_email, $email)) {
 			$alert = "<span class='alert-success'>Email sai định dạng</span>";
-				return $alert;		
+				return $alert;
 		} else if ($res->num_rows == 1) {
 			$alert = "<span class='alert-success'>Tên tài khoản bị trùng</span>";
 				return $alert;
 		} else if ($rese->num_rows == 1) {
 			$alert = "<span class='alert-success'>Email đã được đăng kí</span>";
-				return $alert;		
+				return $alert;
 		} else if ($pass != $cp) {
 			$alert = "<span class='alert-success'>Mật khẩu nhập lại sai</span>";
-				return $alert;	
-		} else if (!preg_match($regex_phone, $phone)) {
-			$alert = "<span class='alert-success'>Số đêịn thoại sai định dạng</span>";
-				return $alert;		
+				return $alert;
 		} else if (!preg_match($checkfn, $fullname)) {
 			$password = password_hash($cp, PASSWORD_DEFAULT);
-			$sql = "INSERT INTO $this->customer VALUES ('', '$name', '$pass', '$fullname', '$email', '$phone')";
+			$sql = "INSERT INTO $this->customer (name,address,phone,password,id_role) VALUES ('$name', '$address', '$fullname', '$email', '$phone', 3)";
 			$res = $this->Query($sql);
 			if ($res) {
-				$alert = "<span class='alert-success'>Insert success</span>";
-					return $alert;
+                    $subject =$_SERVER["SERVER_NAME"];
+        			$to = $post['email'];
+    				$content ="Chào bạn ".$post['fullname']."
+    				Chúc mừng bạn đã đăng kí thành công tài khoản của bạn như sau:
+    				Username: ".$post['name']."
+    				Email: ".$post['email']."
+    				Ngày: ".date('Y-m-d');
+    				$from ='tuvnph08581@fpt.edu.vn';
+
+    				$sendMail = Send_email_via_smtp_gmail($subject, $to, $content, array(), array(), $from, 0);
+
+    				if ($sendMail['code'] == 1) {
+    				    // gui mail thanh cong
+    				    $alert = "<span class='alert-success'>Insert success</span>";
+                		return $alert;
+
+    				} else {
+    				    echo $sendMail['msg'];
+    				}
 				}
 			}
 		}

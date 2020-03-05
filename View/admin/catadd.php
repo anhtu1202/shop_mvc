@@ -38,11 +38,11 @@
 </script>
 <script>
     function Regex() {
-            var name = document.getElementById('cat_name').value;
-            if (!name) {
+            var cat_name = document.getElementById('cat_name').value;
+            if (!cat_name) {
                 alert( 'Hãy nhập đầy đủ dữ liệu' );
                 return false;
-            } else if (!isNaN(name)) {
+            } else if (!isNaN(cat_name)) {
                 alert('Hãy nhập dữ liệu dạng chuỗi');
                 return false;
             }

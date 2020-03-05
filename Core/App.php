@@ -60,7 +60,7 @@
 
 			// khai báo sẵn mảng các chức năng public không chặn quyền.
 			$arr_public_action = ['Index.Index',
-			'Index.Details','Index.Login','Index.Products'];
+			'Index.Details','Index.Login','Index.Products','Index.Regis','Index.Captcha'];
 
 			if(in_array($strCheck, $arr_public_action)){
 			return true;// các chức năng public thì luôn là true, ai cũng được phép vào không chặn quyền
