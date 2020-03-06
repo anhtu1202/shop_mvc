@@ -1,20 +1,5 @@
 <?php 
-		include 'inc/header.php'; 
-		// if (isset($_GET['product_id']) && $_GET['product_id'] != NULL) {
-  //       	$product_id = $_GET['product_id'];
-	 //    }else{
-	 //        echo "<script>window.location = '404.php';</script>";
-	 //    }
-        $id = Session::get("customer_id");
-	    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
-        $update_customer = $cus->update_customer($_POST,$id);
-    }
-
-		$login_check = Session::get("customer_login");
-			if ($login_check == false) {
-				header('Location:login.php');
-			}
-	
+		require_once 'Inc/header.php'; 
 ?>	
 <style type="text/css">
     input{
@@ -43,17 +28,19 @@
     			<table class="tblone">
                     <tr>
                         <td colspan="3">
-                            <?php if (isset($update_customer)) {
-                                echo $update_customer;
-                            } ?>
+                          <?php 
+                            if(!empty($this->dataView['msg'])){
+                                 echo $this->dataView['msg'];
+                             }
+                            ?>
                         </td>
                     </tr>
     				<?php 
-    					$id = Session::get("customer_id");
-    					$show_customer = $cus->show_customer($id);
-    					if ($show_customer) {
-    						while ($result = $show_customer->fetch_assoc()) {
-    				 ?>
+                        if(!empty($this->dataView)){
+                                $result = $this->dataView;
+                         ?>
+                   <input type="hidden" value="<?php echo $result['id']; ?>" name="id">
+              
     				<tr>
     					<td>Name</td>
     					<td>:</td>
@@ -63,11 +50,6 @@
     					<td>Address</td>
     					<td>:</td>
     					<td><input type="text" value="<?php echo $result['address']; ?>" name="address"></td>
-    				</tr>
-    				<tr>
-    					<td>Zip-code</td>
-    					<td>:</td>
-    					<td><input type="text" value="<?php echo $result['zipcode']; ?>" name="zipcode"></td>
     				</tr>
     				<tr>
     					<td>Phone</td>
@@ -82,7 +64,7 @@
     				<tr>
     					<td colspan="3"><button type="submit" name="save" class="save">Save</button></td>
     				</tr>
-    			<?php }} ?>
+    			<?php } ?>
     			</table>
             </form>
  			</div>

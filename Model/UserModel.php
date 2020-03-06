@@ -66,7 +66,7 @@ require_once app_path.'/Sendmail/sendmail.php';
 		}
 
 		public function loadLogin($email){
-			$sql = "SELECT name,email,password,id_role FROM $this->customer WHERE email = '{$email}'";
+			$sql = "SELECT * FROM $this->customer WHERE email = '{$email}'";
 			$res = $this->Query($sql);
 			if($res->num_rows == 1){
 				$user = $res->fetch_assoc();
@@ -75,5 +75,21 @@ require_once app_path.'/Sendmail/sendmail.php';
 			return null ;
 		}
 
+		public function updateProfile($post)
+		{
+			$id = $post['id'];
+			$name = $post['name'];
+			$address = $post['address'];
+			$phone = $post['phone'];
+			$email = $post['email'];
+			$sql = "UPDATE $this->customer SET name='$name',address='$address',phone='$phone',email='$email' 
+			WHERE id='$id'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$sql = "SELECT * FROM $this->customer WHERE id = '{$id}'";
+					$res = $this->Query($sql)->fetch_assoc();
+					return $res;
+				}
+		}
 
 	}

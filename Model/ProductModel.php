@@ -219,6 +219,17 @@ require_once 'Helper/SimpleImage.php';
 			return $data;
 		}
 
+		public function getProductCat($id)
+		{
+			$sql = "SELECT * FROM product INNER JOIN category ON product.cat_id=category.cat_id WHERE product.cat_id=$id AND product_type = 'Featured'";
+			$res = $this->Query($sql);
+				$data = [];
+				while($row = $res->fetch_assoc()){
+					$data[] = $row;
+				}
+			return $data;
+		}
+
 		public function cartAdd($id,$quantity)
 		{
 			$sql = "SELECT * FROM product WHERE product_id='$id'";
@@ -268,6 +279,17 @@ require_once 'Helper/SimpleImage.php';
 		public function cartDel($id)
 		{
 			$sql = "DELETE FROM cart WHERE cart_id='$id'";
+			$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='success'>Delete cart success</span>";
+					return $alert;
+				}
+		}
+
+		public function delCart()
+		{
+			$sess_id = session_id();
+			$sql = "DELETE FROM cart WHERE sess_id='$sess_id'";
 			$res = $this->Update($sql);
 				if ($res) {
 					$alert = "<span class='success'>Delete cart success</span>";
