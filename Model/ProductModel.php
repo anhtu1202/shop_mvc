@@ -98,11 +98,11 @@ require_once 'Helper/SimpleImage.php';
 			ORDER BY product_id" ;
 			$res = $this->Query($sql)->fetch_assoc();
 			if ($res) {
-
 				return $res;
 			}
 
 		}
+		
 
 		public function proEdit($id,$data,$files)
 		{
@@ -219,5 +219,12 @@ require_once 'Helper/SimpleImage.php';
 					$data[] = $row;
 				}
 			return $data;
+		}
+	public function getProductbycat(){
+		$sql = "SELECT * FROM product INNER JOIN category ON product.cat_id=category.cat_id ";
+		$res = $this->Query($sql)->fetch_assoc();
+			if ($res) {
+				return $res;
+				}
 		}
 	}

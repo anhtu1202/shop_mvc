@@ -30,7 +30,7 @@
 			if ($_POST['captcha'] == $_SESSION['captcha']){
        			$succes = $objModel->addUser($_POST);
 	       		if(!empty($succes)){
-					$data['msg'] = $succes;
+				$data['msg'] = $succes;
 				}
    			 }else {
    			 	$data['msg'] = 'Mã captcha ko đúng!';
@@ -126,4 +126,15 @@
 		$this->RenderView('view.details', $data);
 		}
 		
-}		
+		
+	public function Productbycat(){
+		$data=['pro'=>[],'cat'=>[]];
+		if(isset($_GET['cat_id'])){
+			$objProModel= new ProductModel();
+			$objCatModel= new CatModel();
+			$data['pro'] = $objProModel->getProductbycat();
+			
+		}
+		$this->RenderView('view.productbycat', $data);
+		}	
+}

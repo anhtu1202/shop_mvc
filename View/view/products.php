@@ -26,7 +26,7 @@
 					 <h2><?php echo $resultpro['product_name']; ?> </h2>
 					 <p><?php echo $fm->textShorten($resultpro['product_desc'],30) ?></p>
 					 <p><span class="price"><?php echo number_format($resultpro['product_price']); ?> VNĐ</span></p>
-				     <div class="button"><span><a href="?act=product&id=<?php echo $result['product_id']; ?>" class="details">Details</a></span></div>
+				     <div class="button"><span><a href="?act=details&product_id=<?php echo $result['product_id']; ?>" class="details">Details</a></span></div>
 				</div>
 			<?php }}} ?>
 			</div>
