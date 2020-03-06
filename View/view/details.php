@@ -35,9 +35,14 @@
 						<p>Brand:<span><?php echo $result['brand_name']; ?></span></p>
 					</div>
 				<div class="add-cart">
-					<form action="" method="post">
+					<?php 
+						if(!empty($this->dataView['msg'])){
+                       	echo $this->dataView['msg'];
+                       }
+					 ?>
+					<form action="?act=buy&product_id=<?php echo $result['product_id']; ?>" method="post">
 						<input type="number" class="buyfield" name="quantity" value="1" min="1" />
-						<input type="submit" class="buysubmit" name="submit" value="Buy Now"/>
+						<input type="submit" class="buysubmit" name="buy" value="Buy Now"/>
 						<div style="color: red; font-size: 18px; font-family: Tahoma;">
 							
 			    		</div>

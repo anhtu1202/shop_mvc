@@ -1,54 +1,42 @@
-<?php ob_start();
+<?php
 		include 'inc/header.php'; 
-		include 'inc/slider.php';
-        if (isset($_GET['cart_id'])) {
-        	$cart_id = $_GET['cart_id'];
-        	$del_cart = $ct->del_cart($cart_id);
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-			$cart_id = $_POST['cart_id'];
-	    	$quantity = $_POST['quantity'];
-        	$update_quantity_cart = $ct->update_quantity_cart($cart_id,$quantity);
-        }
-        if (empty($_GET['product_id'])) {
-        	echo "<meta http-equiv='refresh' content='0;URL=?product_id=live'>";
-        }
 ?>	
  <div class="main">
     <div class="content">
     	<div class="cartoption">		
 			<div class="cartpage">
 			    	<h2>Your Cart </h2>
-			    	<div style="padding: 10px;">
 			    	<?php 
-			    	if (isset($update_quantity_cart)) {
-			    		echo $update_quantity_cart;
-			    	}
-			    	if (isset($del_cart)) {
-			    		echo $del_cart;
-			    	}
-			    	 ?>
+                		if (isset($_SESSION['success'])) {
+                			?>   
+                	<div class="alert alert-success">
+                		<?php 
+                				echo $_SESSION['success'];
+                				$_SESSION['success']=null;
+                		 ?> 
+                	</div>
+               	 <?php } ?>
+			    	<div style="padding: 10px;">
+			    	
 			    	<div>
 
 						<table class="tblone">
 							<tr>
 								<th width="20%">Product Name</th>
-								<th width="10%">Image</th>
+								<th width="20%">Image</th>
 								<th width="15%">Price</th>
-								<th width="25%">Quantity</th>
+								<th width="20%">Quantity</th>
 								<th width="20%">Total Price</th>
 								<th width="10%">Action</th>
 							</tr>
 							<?php 
-								$get_product_cart = $ct->get_product_cart();
-								if ($get_product_cart) {
-									$subtotal = 0;
-									$qtity = 0;
-									while ($result = $get_product_cart->fetch_assoc()) {
+							$subtotal = $qtity = 0;
+								if(!empty($this->dataView['cart'])){
+								foreach ($this->dataView['cart'] as $key => $result) {
 							 ?>
 							<tr>
 								<td><?php echo $result['product_name']; ?></td>
-								<td><img src="admin/uploads/<?php echo $result['image']; ?>" alt=""/></td>
+								<td><img width="100%" src="<?php echo $result['image']; ?>" alt=""/></td>
 								<td><?php echo number_format($result['price']); ?> VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -59,7 +47,7 @@
 								</td>
 								<td><?php $total = $result['price']*$result['quantity'];
 								 echo number_format($total); ?> VNĐ</td>
-								<td><a onclick="return confirm('Are you sure delete?');" href="?cart_id=<?php echo $result['cart_id']; ?>">Xóa</a></td>
+								<td><a onclick="return confirm('Are you sure delete?');" href="?act=cart&cart_id=<?php echo $result['cart_id']; ?>">Xóa</a></td>
 							</tr>
 							<?php 
 								$subtotal += $total;
@@ -73,7 +61,7 @@
 								if (isset($subtotal)) {
 								echo number_format($subtotal);
 								// Session::set("sum",$subtotal);
-								Session::set("qtity",$qtity);
+								$_SESSION["qtity"] = $qtity;
 								}else{
 									echo "0";
 								} ?> VNĐ</td>
@@ -96,16 +84,15 @@
 					</div>
 					<div class="shopping">
 						<div class="shopleft">
-							<a href="index.php"> <img src="images/shop.png" alt="" /></a>
+							<a href="<?php echo base_path; ?>"> <img src="Uploads/shop.png" alt="" /></a>
 						</div>
 						<div class="shopright">
-							<a href="payment.php"> <img src="images/check.png" alt="" /></a>
+							<a href="?act=payment"> <img src="Uploads/check.png" alt="" /></a>
 						</div>
 					</div>
     	</div>  	
        <div class="clear"></div>
     </div>
  </div>
-<?php include 'inc/footer.php';
-	ob_end_flush();
+<?php include 'Inc/footer.php';
 ?>	

@@ -95,10 +95,9 @@ require_once 'Helper/SimpleImage.php';
 			$sql = "SELECT * FROM product
 			INNER JOIN brand ON product.brand_id=brand.brand_id
 			INNER JOIN category ON product.cat_id=category.cat_id
-			ORDER BY product_id" ;
+			WHERE product_id = '$id'";
 			$res = $this->Query($sql)->fetch_assoc();
 			if ($res) {
-
 				return $res;
 			}
 
@@ -122,7 +121,6 @@ require_once 'Helper/SimpleImage.php';
 			$unique_image = mt_rand(100,10000).".".$file_ext;
 			$uploaded_image = "uploads/".$unique_image;
 			if ($file_name != "") {
-
 			if ($file_ext != $permited[0] && $file_ext != $permited[1] && $file_ext != $permited[2] && $file_ext != $permited[3]) {
 				$alert = "<span class='error'>Field must be not image</span>";
 				return $alert;
@@ -135,9 +133,9 @@ require_once 'Helper/SimpleImage.php';
 				SET product_name='$product_name',cat_id='$cat_id',brand_id='$brand_id',product_price='$product_price',
 				product_image='$unique_image',product_desc='$product_desc',product_type='$product_type'
 				WHERE product_id='$product_id'";
-				$result = $this->db->update($query);
+				$result = $this->db->Update($query);
 				if ($result) {
-					echo "<script>window.location = 'productlist.php';</script>";
+					echo "<script>window.location = '?ct=product&act=productlist';</script>";
 				}else{
 					$alert = "<span class='error'>Update product not success</span>";
 					return $alert;
@@ -148,9 +146,9 @@ require_once 'Helper/SimpleImage.php';
 				SET product_name='$product_name',cat_id='$cat_id',brand_id='$brand_id',product_price='$product_price'
 				,product_desc='$product_desc',product_type='$product_type'
 				WHERE product_id='$product_id'";
-				$result = $this->db->update($query);
+				$result = $this->db->Update($query);
 				if ($result) {
-					echo "<script>window.location = 'productlist.php';</script>";
+					echo "<script>window.location = '?ct=product&act=productlist';</script>";
 				}else{
 					$alert = "<span class='error'>Update product not success</span>";
 					return $alert;
@@ -212,12 +210,68 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getSlider()
 		{
-			$sql = "SELECT * FROM slide WHERE slide_type=0 ORDER BY slide_id DESC;";
+			$sql = "SELECT * FROM slide WHERE slide_type=0 ORDER BY slide_id DESC";
 			$res = $this->Query($sql);
 				$data = [];
 				while($row = $res->fetch_assoc()){
 					$data[] = $row;
 				}
 			return $data;
+		}
+
+		public function cartAdd($id,$quantity)
+		{
+			$sql = "SELECT * FROM product WHERE product_id='$id'";
+			$res = $this->Query($sql)->fetch_assoc();
+			$sess_id = session_id();
+			$product_name = $res['product_name'];
+			$product_price = $res['product_price'];
+			$product_image = $res['product_image'];
+			$checkcart = "SELECT * FROM cart WHERE product_id='$id' AND sess_id='$sess_id'";
+			$cart = $this->Query($checkcart)->fetch_assoc();
+			if ($cart) {
+				$alert = "<span class='success'>Product Already Added</span>";
+				return $alert;
+			} else {
+			$sqlpro = "INSERT INTO cart (product_id,sess_id,product_name,price,quantity,image) 
+				VALUES ('$id','$sess_id','$product_name','$product_price','$quantity','$product_image')";
+				$return = $this->Insert($sqlpro);
+				if ($return) {
+					$alert = "<span class='success'>Add cart success</span>";
+					return $alert;
+				}	
+			}	
+		}
+
+		public function getCart()
+		{
+			$sess_id = session_id();
+			$sql = "SELECT * FROM cart WHERE sess_id='$sess_id'";
+			$res = $this->Query($sql);
+				$data = [];
+				while($row = $res->fetch_assoc()){
+					$data[] = $row;
+				}
+			return $data;
+		}
+
+		public function cartUpdate($id,$quantity)
+		{
+			$sql = "UPDATE cart SET quantity='$quantity'  WHERE cart_id='$id'";
+			$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='success'>Update cart success</span>";
+					return $alert;
+				}
+		}
+
+		public function cartDel($id)
+		{
+			$sql = "DELETE FROM cart WHERE cart_id='$id'";
+			$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='success'>Delete cart success</span>";
+					return $alert;
+				}
 		}
 	}
