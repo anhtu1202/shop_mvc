@@ -24,16 +24,26 @@
 
 	public function Regis(){
 
-		$data =['err'=>[], 'msg'=>[]];
+		$data =['err'=>[], 'msgre'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
 		$objModel = new UserModel();
+		$objProModel = new ProductModel();
+		$data['apple'] = $objProModel->getLastedApple();
+		$data['samsung'] = $objProModel->getLastedSamsung();
+		$data['dell'] = $objProModel->getLastedDell();
+		$data['sony'] = $objProModel->getLastedSony();
+		$data['slide'] = $objProModel->getSlider();
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){	
 			if ($_POST['captcha'] == $_SESSION['captcha']){
        			$succes = $objModel->addUser($_POST);
 	       		if(!empty($succes)){
+
 				$data['msg'] = $succes;
+
+					$data['msgre'] = $succes;
+
 				}
    			 }else {
-   			 	$data['msg'] = 'Mã captcha ko đúng!';
+   			 	$data['err'] = 'Mã captcha ko đúng!';
    		 	}			
 		}	
 		$this->RenderView('view.login', $data);
@@ -116,25 +126,71 @@
 
 	public function Details(){
 		$data =[ 'pro'=>[], 'cat'=>[] ];
-		if(isset($_GET['product_id'])){
-		$objProModel = new ProductModel();
-		$objCatModel = new CatModel();
+			if(isset($_GET['product_id'])){
+			$objProModel = new ProductModel();
+			$objCatModel = new CatModel();
+			$data['pro'] = $objProModel->getProduct($_GET['product_id']);
+			$data['cat'] = $objCatModel->getAllCat();
+			$this->RenderView('view.details', $data);
+			}else {
+				$this->RenderView('view.404', $data);	
+			}
+		}
 
-		$data['pro'] = $objProModel->getProduct($_GET['product_id']);
-		$data['cat'] = $objCatModel->getAllCat();
-		}
+	public function Buy()
+		{
+			$data =[ 'msg'=>[] ];
+			$objProModel = new ProductModel();
+			$objCatModel = new CatModel();
+			$data['pro'] = $objProModel->getProduct($_GET['product_id']);
+			$data['cat'] = $objCatModel->getAllCat();
+			if (isset($_POST['buy'])) {
+				$res = $objProModel->cartAdd($_GET['product_id'], $_POST['quantity']);
+				if ($res) {
+					$data['msg'] = $res;
+				}else {
+					$this->RenderView('view.404', $data);
+				}
+			}
 		$this->RenderView('view.details', $data);
-		}
+		}	
 		
+
 		
 	public function Productbycat(){
-		$data=['pro'=>[],'cat'=>[]];
+		$data=['prod'=>[],'cat'=>[]];
 		if(isset($_GET['cat_id'])){
 			$objProModel= new ProductModel();
 			$objCatModel= new CatModel();
-			$data['pro'] = $objProModel->getProductbycat();
+			$data['prod'] = $objProModel->getProductbycat();
 			
 		}
 		$this->RenderView('view.productbycat', $data);
 		}	
-}
+
+
+	public function Cart()
+		{
+			$data =[ 'msg'=>[], 'cart'=>[] ];
+			$objProModel = new ProductModel();
+			$data['cart'] = $objProModel->getCart();
+			if (isset($_POST['cart_id']) && isset($_POST['quantity'])) {
+				$res = $objProModel->cartUpdate($_POST['cart_id'], $_POST['quantity']);
+				if ($res) {
+					$_SESSION['success'] = $res;
+					
+					header('Location: ?act=cart');
+				}else {
+					$this->RenderView('view.404', $data);
+				}
+			} else if (isset($_GET['cart_id'])) {
+				$res = $objProModel->cartDel($_GET['cart_id']);
+				if ($res) {
+					$_SESSION['success'] = $res;
+					header('Location: ?act=cart');
+				}
+			}
+			$this->RenderView('view.cart', $data);
+		}	
+}		
+

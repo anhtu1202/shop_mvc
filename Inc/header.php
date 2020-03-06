@@ -18,6 +18,8 @@
 	<script type="text/javascript" src="js/nav-hover.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<script type="text/javascript">
 	  $(document).ready(function($){
 	    $('#dc_mega-menu-orange').dcMegaMenu({rowItems:'4',speed:'fast',effect:'fade'});
@@ -56,6 +58,7 @@
 			    </div>
 			</div>
 		<div class="shopping_cart">
+				<div style="font-size: 27px; color: #6c3598; position: absolute;"><i class="fa fa-shopping-cart"></i></div>
 					<div class="cart">
 						<a href="#" title="View my shopping cart" rel="nofollow">
 								<span class="no_product"></span>
@@ -70,6 +73,7 @@
 	  <li><a href="?act=products">Products</a> </li>
 	  <li><a href="topbrands.php">Top Brands</a></li>
 	  <li><a href="">Contact</a> </li>
+	  <li><a href="?act=cart">Your Cart</a></li>
 	  <?php if (isset($_SESSION['auth'])) {
 	  	?>
 	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout</a></li>

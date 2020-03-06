@@ -13,7 +13,7 @@ ob_flush();
 				}
 		 		?>	 	
 		 </p>
-        	<form action="" method="post" id="member" class="form-group" onsubmit="return Validate()">
+        	<form action="?act=login" method="post" id="member" class="form-group" onsubmit="return Validate()">
                 	<input name="email" class="form-inline" required="" type="text" class="field" placeholder="Email" />
                     <input name="password" class="form-inline" required="" type="password" class="field" placeholder="Password" />
                  <p class="note">Nếu bạn ko có tài khoản hãy đăng kí ở form bên cạnh!</p>
@@ -22,11 +22,17 @@ ob_flush();
                     </div>
     	<div class="register_account">
     		<h3>Đăng kí tài khoản mới !</h3>
-    		<?php 
-				if(!empty($this->dataView['msg'])){
-					echo $this->dataView['msg'];
-				}
-		 		?>	
+                <?php 
+                if(!empty($this->dataView['err'])){
+                ?>
+                  <div class="alert alert-danger"> <?php echo $this->dataView['err']; ?></div>
+                <?php  
+                } 
+                if(!empty($this->dataView['msgre'])){
+                ?>      
+                <div class="alert alert-danger"><?php echo $this->dataView['msgre']; ?></div>
+                <?php } ?>
+            
     		<form action="?act=regis" method="post" class="form-group" onsubmit="return Regex()">
     			<table>
     				<tbody>

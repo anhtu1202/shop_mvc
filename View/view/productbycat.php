@@ -4,8 +4,8 @@
 ?>	
 <?php 
 	 
-                    if(!empty($this->dataView['pro'])){
-                       $result = $this->dataView['pro'];
+                    if(!empty($this->dataView['prod'])){
+                       $result = $this->dataView['prod'];
                  ?>
    
  					

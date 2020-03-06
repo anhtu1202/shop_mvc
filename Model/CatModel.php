@@ -56,14 +56,5 @@
 				return $alert;
 			}
 		}
-		public function getProductbycat($id){
-			$sql = "SELECT * FROM product
-			INNER JOIN brand ON product.brand_id=brand.brand_id
-			INNER JOIN category ON product.cat_id=category.cat_id
-			ORDER BY cat_id" ;
-			$res = $this->Query($sql)->fetch_assoc();
-			if ($res) {
-				return $res;
-			}
-		}
+		
 	}
