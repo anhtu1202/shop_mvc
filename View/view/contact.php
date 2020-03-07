@@ -1,7 +1,7 @@
 <?php 
-		include 'inc/header.php'; 
-		include 'inc/slider.php';
-?>
+		require_once 'Inc/header.php'; 
+		require_once 'Inc/slider.php';
+	?>
  <div class="main">
     <div class="content">
     	<div class="support">
@@ -56,5 +56,8 @@
     </div>
  </div>
 
-<?php include 'inc/footer.php'; ?>
+
+<?php 
+		include 'Inc/footer.php'; 
+?>	
 

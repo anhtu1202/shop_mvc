@@ -52,16 +52,25 @@
 			</div>
 			  <div class="header_top_right">
 			    <div class="search_box">
-				    <form action="" method="post">
-				    	<input type="text" name="keywords" placeholder="Tìm kiếm..."><input type="submit" value="Search">
+				    <form action="" method="GET">
+						
+				    	<input type="text" name="keywords" placeholder="Tìm kiếm...">
+				    	<input type="submit" value="Search">
+						<input type="hidden" name="act" value="search">
+				    	
 				    </form>
+						
 			    </div>
 			</div>
 		<div class="shopping_cart">
 				<div style="font-size: 27px; color: #6c3598; position: absolute;"><i class="fa fa-shopping-cart"></i></div>
 					<div class="cart">
-						<a href="#" title="View my shopping cart" rel="nofollow">
-								<span class="no_product"></span>
+						<a href="?act=cart" title="View my shopping cart" rel="nofollow">
+								<span class="no_product"><?php if (isset($_SESSION['sum']) && isset($_SESSION['qtity'])) {
+									echo number_format($_SESSION['sum']).' VNĐ /'.$_SESSION['qtity'].' Sản phẩm';
+								} else {
+									echo "Empty";
+								} ?></span>
 							</a>
 						</div>
 			      </div>	
@@ -71,12 +80,12 @@
 	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
 	  <li><a href="<?php echo base_path; ?>">Home</a></li>
 	  <li><a href="?act=products">Products</a> </li>
-	  <li><a href="topbrands.php">Top Brands</a></li>
-	  <li><a href="">Contact</a> </li>
+	  <li><a href="?act=contact">Contact</a> </li>
 	  <li><a href="?act=cart">Your Cart</a></li>
 	  <?php if (isset($_SESSION['auth'])) {
 	  	?>
-	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout</a></li>
+	  	<li><a href="?act=profile">Profile</a></li>
+	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout(<span style="color: red;"><?php echo $_SESSION['auth']['name']; ?></span>)</a></li>
 	  <?php } else { ?>	 
 	  <li style="float: right;"><a href="<?php echo base_path; ?>?act=login">Login</a></li>
 	<?php } ?>

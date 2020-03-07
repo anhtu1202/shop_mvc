@@ -59,11 +59,10 @@
 			$strCheck = $ct .'.'. $action;
 
 			// khai báo sẵn mảng các chức năng public không chặn quyền.
-			$arr_public_action = ['Index.Index',
 
-			'Index.Details','Index.Login','Index.Products','Index.Regis','Index.Captcha','Index.Productbycat',
+			
 
-			'Index.Buy','Index.Cart'];
+			$arr_public_action = ['Index.Index','Index.Details','Index.Login','Index.Products','Index.Regis','Index.Captcha','Index.Buy','Index.Cart','Index.Productcat','Index.Contact','Index.Profile','Index.Editprofile','Index.Search'];
 
 
 			if(in_array($strCheck, $arr_public_action)){

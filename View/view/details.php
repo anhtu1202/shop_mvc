@@ -15,7 +15,11 @@
                        	  	foreach ($this->dataView['cat'] as $key => $value) {
                 		 ?>
 				     	<li>				      	
+
 				    <a href="?act=productbycat&cat_id=<?php echo $value['cat_id']; ?>"><?php echo $value['cat_name']; ?></a>
+
+				 
+
 				      </li>
 				 <?php }} ?>
     				</ul>

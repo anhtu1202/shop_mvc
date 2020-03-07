@@ -148,5 +148,6 @@
 </script>
 <?php require_once 'Incad/footer.php';?>
 
-
+<?php 
+}} ?>
 

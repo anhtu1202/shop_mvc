@@ -117,8 +117,10 @@
 	
 
 	public function Logout(){
+		$objProModel = new ProductModel();
+		$objProModel->delCart();
 		if(!empty($_SESSION['auth'])){
-			session_unset();
+			session_destroy();
 		}
 		header('Location:'.base_path);
 		}
@@ -136,6 +138,24 @@
 				$this->RenderView('view.404', $data);	
 			}
 		}
+
+	public function Productcat(){
+		$data =['cat'=>[], 'pro'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+		$objProModel = new ProductModel();
+		$objCatModel = new CatModel();
+		$data['apple'] = $objProModel->getLastedApple();
+		$data['samsung'] = $objProModel->getLastedSamsung();
+		$data['dell'] = $objProModel->getLastedDell();
+		$data['sony'] = $objProModel->getLastedSony();
+		$data['slide'] = $objProModel->getSlider();
+		if(isset($_GET['cat_id'])){
+			$data['pro'] = $objProModel->getProductCat($_GET['cat_id']);
+			$data['cat'] = $objCatModel->getCat($_GET['cat_id']);
+				$this->RenderView('view.productbycat', $data);
+			}else {
+				$this->RenderView('view.404', $data);	
+			}
+		}	
 
 	public function Buy()
 		{
@@ -157,16 +177,16 @@
 		
 
 		
-	public function Productbycat(){
-		$data=['prod'=>[],'cat'=>[]];
-		if(isset($_GET['cat_id'])){
-			$objProModel= new ProductModel();
-			$objCatModel= new CatModel();
-			$data['prod'] = $objProModel->getProductbycat();
+	// public function Productbycat(){
+	// 	$data=['prod'=>[],'cat'=>[]];
+	// 	if(isset($_GET['cat_id'])){
+	// 		$objProModel= new ProductModel();
+	// 		$objCatModel= new CatModel();
+	// 		$data['prod'] = $objProModel->getProductbycat();
 			
-		}
-		$this->RenderView('view.productbycat', $data);
-		}	
+	// 	}
+	// 	$this->RenderView('view.productbycat', $data);
+	// 	}	
 
 
 	public function Cart()
@@ -177,8 +197,10 @@
 			if (isset($_POST['cart_id']) && isset($_POST['quantity'])) {
 				$res = $objProModel->cartUpdate($_POST['cart_id'], $_POST['quantity']);
 				if ($res) {
+
 					$_SESSION['success'] = $res;
 					
+
 					header('Location: ?act=cart');
 				}else {
 					$this->RenderView('view.404', $data);
@@ -186,11 +208,62 @@
 			} else if (isset($_GET['cart_id'])) {
 				$res = $objProModel->cartDel($_GET['cart_id']);
 				if ($res) {
-					$_SESSION['success'] = $res;
 					header('Location: ?act=cart');
 				}
 			}
 			$this->RenderView('view.cart', $data);
 		}	
+
+		
+
+
+
+	public function Contact()
+		{
+			$data =['cat'=>[], 'pro'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+			$objProModel = new ProductModel();
+			$data['apple'] = $objProModel->getLastedApple();
+			$data['samsung'] = $objProModel->getLastedSamsung();
+			$data['dell'] = $objProModel->getLastedDell();
+			$data['sony'] = $objProModel->getLastedSony();
+			$data['slide'] = $objProModel->getSlider();
+				$this->RenderView('view.contact', $data);
+		}	
+
+	public function Profile()
+		{
+			$objUserModel = new UserModel();
+			if (isset($_SESSION['auth'])) {
+				$email = $_SESSION['auth']['email'];
+				$data[] = $objUserModel->loadLogin($email);
+			}
+			$this->RenderView('view.profile', $data);
+		}	
+
+	public function Editprofile()
+		{
+			$data = [ 'msg'=>[], 'user'=>[] ];
+			$objUserModel = new UserModel();
+			if (isset($_SESSION['auth'])) {
+				$email = $_SESSION['auth']['email'];
+				$data = $objUserModel->loadLogin($email);
+				if (isset($_POST['save'])) {
+					$data = $objUserModel->updateProfile($_POST);
+					$data['msg'] = "<div class='alert alert-success'>Update success</div>";
+					$this->RenderView('view.editprofile', $data);
+				}
+			} 
+			$this->RenderView('view.editprofile', $data);
+		}
+		public function Search(){
+		 $objProModel=new ProductModel();
+		if (isset($_GET['keywords'])) {
+			$keywords=$_GET['keywords'];
+
+			$res=$objProModel->SearchData($keywords);
+		
+	}
+			$this->RenderView('view.search', $res);
+		}		
 }		
 

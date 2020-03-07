@@ -52,16 +52,19 @@
 							<?php 
 								$subtotal += $total;
 								$qtity += $result['quantity'];
-						}} ?>
+						}
+							$_SESSION['qtity'] = $qtity;
+					} ?>
 						</table>
+						<?php 
+							if(!empty($this->dataView['cart'])){
+						 ?>
 						<table style="float:right;text-align:left;" width="40%">
 							<tr>
 								<th>Sub Total : </th>
 								<td><?php 
 								if (isset($subtotal)) {
 								echo number_format($subtotal);
-								// Session::set("sum",$subtotal);
-								$_SESSION["qtity"] = $qtity;
 								}else{
 									echo "0";
 								} ?> VNĐ</td>
@@ -76,11 +79,15 @@
 								if (isset($subtotal)) {
 								$Grandtotal = ($subtotal*0.1)+$subtotal;
 								echo number_format($Grandtotal); 
+								$_SESSION['sum'] = $Grandtotal;
 								}else{
 									echo "0";
 								}?> VNĐ</td>
 							</tr>
 					   </table>
+					<?php } else {
+						echo "<b>Your cart is empty!</b>";
+					} ?>
 					</div>
 					<div class="shopping">
 						<div class="shopleft">

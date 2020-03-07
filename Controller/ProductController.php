@@ -52,5 +52,5 @@ class ProductController extends ControllerBase
 		}
 		$this->RenderView('admin.productedit', $data); 
 	}
-
-}
+	
+	}
