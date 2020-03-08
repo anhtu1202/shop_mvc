@@ -161,7 +161,7 @@ require_once app_path.'/Sendmail/sendmail.php';
 
 		public function userUp($id)
 		{
-			$sql = "UPDATE $this->customer SET status=2 WHERE id='$id'";
+			$sql = "UPDATE $this->customer SET id_role=2 WHERE id='$id'";
 				$res = $this->Update($sql);
 				if ($res) {
 					$alert = "<span class='alert-success'>Đã lên cấp</span>";
@@ -171,7 +171,7 @@ require_once app_path.'/Sendmail/sendmail.php';
 
 		public function userDown($id)
 		{
-			$sql = "UPDATE $this->customer SET status=3 WHERE id='$id'";
+			$sql = "UPDATE $this->customer SET id_role=3 WHERE id='$id'";
 				$res = $this->Update($sql);
 				if ($res) {
 					$alert = "<span class='alert-success'>Đã hạ cấp</span>";

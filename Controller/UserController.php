@@ -88,10 +88,10 @@ class UserController extends ControllerBase{
 		$data = [ 'msg'=>[] ];
 		$objUserModel = new UserModel();
 		if (isset($_SESSION['auth'])) {
-			$data = $objUserModel->userList();
 			if (isset($_GET['id'])) {
 				$data['msg'] = $objUserModel->userUp($_GET['id']);
 				}
+				$data = $objUserModel->userList();
 				$this->RenderView('admin.userlist', $data);
 			} else {
 				$this->RenderView('view.404', $data);
@@ -103,10 +103,10 @@ class UserController extends ControllerBase{
 		$data = [ 'msg'=>[] ];
 		$objUserModel = new UserModel();
 		if (isset($_SESSION['auth'])) {
-			$data = $objUserModel->userList();
 			if (isset($_GET['id'])) {
 				$data['msg'] = $objUserModel->userDown($_GET['id']);
 				}
+				$data = $objUserModel->userList();
 				$this->RenderView('admin.userlist', $data);
 			} else {
 				$this->RenderView('view.404', $data);

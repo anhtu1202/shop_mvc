@@ -5,15 +5,10 @@
         <h2>User List</h2>
         <div class="block">  
             <?php 
-                    if (isset($_SESSION['success'])) {
-                            ?>   
-                    <div class="alert alert-success">
-                        <?php 
-                                echo $_SESSION['success'];
-                                $_SESSION['success']=null;
-                         ?> 
-                    </div>
-                <?php } ?>
+                 if(!empty($this->dataView['msg'])){
+                    echo $this->dataView['msg'];
+                 }
+                ?>
                    <table class="data display datatable" id="example">
                     <thead>
                         <tr>
