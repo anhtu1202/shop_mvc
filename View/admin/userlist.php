@@ -37,7 +37,9 @@
                              ?>
                             <a href="?ct=user&act=userup&id=<?php echo $result['id']; ?>">Tăng cấp</a> || 
                             <a href="?ct=user&act=userdown&id=<?php echo $result['id']; ?>">Hạ Cấp</a>
-                            <?php } ?>
+                            <?php } else {
+                                echo "<i class='fa fa-times-circle-o'></i>";
+                            } ?>
                         </td>
                         </tr>
                        <?php }} ?>  

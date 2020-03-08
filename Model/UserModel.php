@@ -148,8 +148,8 @@ require_once app_path.'/Sendmail/sendmail.php';
 
 		public function userList()
 		{
-			$sql = "SELECT * FROM $this->customer INNER JOIN tb_role 
-			ON customer.id_role=tb_role.id ORDER BY id_role";
+			$sql = "SELECT customer.*,tb_role.name_role FROM $this->customer INNER JOIN tb_role 
+			ON customer.id_role=tb_role.id";
 			$res = $this->Query($sql);
 			$data = [];
 			
