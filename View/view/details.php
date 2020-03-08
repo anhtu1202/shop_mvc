@@ -55,11 +55,9 @@
 				
 				<div class="add-cart">
 					<form action="" method="post">
-						<!-- <a class="buysubmit" href="?wlist=<?php echo $result['product_id']; ?>">Save to wishlist</a>
-						<a class="buysubmit" href="?compare=<?php echo $result['product_id']; ?>">Compare product</a> -->
 						<input type="hidden" name="product_id" value="<?php echo $result['product_id']; ?>">
-						<input type="submit" class="buysubmit" name="compare" value="Compare Product">
-						<input type="submit" class="buysubmit" name="wlist" value="Save To Wishlist">
+						<input type="submit" class="buysubmit" name="compare" value="So sánh sản phẩm">
+						<input type="submit" class="buysubmit" name="wlist" value="Lưu sản phẩm yêu thích">
 						<br />
 						<div style="color: red; font-size: 18px; font-family: Tahoma;">
 							

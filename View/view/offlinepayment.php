@@ -1,13 +1,7 @@
 <?php 
-		include 'inc/header.php'; 
-		 if (isset($_GET['order_id']) && $_GET['order_id'] != NULL) {
-        	$customer_id = Session::get("customer_id");
-        	$insert_order = $ct->insert_order($customer_id);
-			$Dellcart = $ct->del_all_cart(); 
-			    header('Location:success.php');
-			     				     			    
-	    }
-?>	
+        include 'Inc/header.php'; 
+        
+?> 
 <style type="text/css">
 	.box_left{
 		width: 55%;
@@ -38,7 +32,7 @@
     <div class="content">
     	<div class="section group">
 	    		<div class="heading">
-	    		<h3>Offline Payment</h3>
+	    		<h3>Thanh toán tiền mặt</h3>
 	    		</div>
 	    		<div class="clear"></div>
 	    		<div class="box_left">
@@ -54,16 +48,12 @@
 								<th width="20%">Total Price</th>
 							</tr>
 							<?php 
-								$get_product_cart = $ct->get_product_cart();
-								if ($get_product_cart) {
-									$subtotal = 0;
-									$qtity = 0;
-									$i = 0;
-									while ($result = $get_product_cart->fetch_assoc()) {
-										$i++;
-							 ?>
+							$subtotal = $qtity = 0;
+								 if(!empty($this->dataView['cart'])){
+                                	foreach ($this->dataView['cart'] as $key => $result) {
+                       			?>		
 							<tr>
-								<td><?php echo $i; ?></td>
+								<td><?php echo $key+1; ?></td>
 								<td><?php echo $result['product_name']; ?></td>
 								<td><?php echo number_format($result['price']); ?> VNĐ</td>
 								<td><?php echo $result['quantity']; ?></td>
@@ -82,7 +72,7 @@
 								if (isset($subtotal)) {
 								echo number_format($subtotal);
 								// Session::set("sum",$subtotal);
-								Session::set("qtity",$qtity);
+								$_SESSION["qtity"] = $qtity;
 								}else{
 									echo "0";
 								} ?> VNĐ</td>
@@ -97,6 +87,7 @@
 								if (isset($subtotal)) {
 								$Grandtotal = ($subtotal*0.1)+$subtotal;
 								echo number_format($Grandtotal); 
+									$_SESSION["Grandtotal"] = $Grandtotal;
 								}else{
 									echo "0";
 								}?> VNĐ</td>
@@ -110,11 +101,9 @@
 	    		<div class="box_right">
 	    			<table class="tblone">
     				<?php 
-    					$id = Session::get("customer_id");
-    					$show_customer = $cus->show_customer($id);
-    					if ($show_customer) {
-    						while ($result = $show_customer->fetch_assoc()) {
-    				 ?>
+                        if(!empty($this->dataView['user'])){
+                            $result = $this->dataView['user'];
+                         ?>
     				<tr>
     					<td>Name</td>
     					<td>:</td>
@@ -126,16 +115,6 @@
     					<td><?php echo $result['address']; ?></td>
     				</tr>
     				<tr>
-    					<td>City</td>
-    					<td>:</td>
-    					<td><?php echo $result['city']; ?></td>
-    				</tr>
-    				<tr>
-    					<td>Zip-code</td>
-    					<td>:</td>
-    					<td><?php echo $result['zipcode']; ?></td>
-    				</tr>
-    				<tr>
     					<td>Phone</td>
     					<td>:</td>
     					<td><?php echo $result['phone']; ?></td>
@@ -145,19 +124,21 @@
     					<td>:</td>
     					<td><?php echo $result['email']; ?></td>
     				</tr>
-    			<?php }} ?>
+    				<tr>
+    					<td colspan="3"><a href="?act=editprofile" class="btn btn-primary">Update profile</a></td>
+    				</tr>
+    			<?php } ?>
     			</table>
 	    		</div>
  			</div>
  		</div>
  		<center>
  			<button class="order">
- 				<a href="?order_id=order">ORDER NOW</a>
+ 				<a href="?act=offlinepayment&order_id=order">ORDER NOW</a>
  			</button>	
  		</center>
  	</div>
 
 <?php 
-		include 'inc/footer.php'; 
-?>	
-
+        require_once 'Inc/footer.php'; 
+?>  

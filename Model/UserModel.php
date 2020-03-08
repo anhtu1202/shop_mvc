@@ -7,6 +7,7 @@ require_once app_path.'/Sendmail/sendmail.php';
 	{
 		
 		private $customer = "customer";
+		private $cus_order = "cus_order";
 
 		public function addUser($post){
 		
@@ -89,6 +90,59 @@ require_once app_path.'/Sendmail/sendmail.php';
 					$sql = "SELECT * FROM $this->customer WHERE id = '{$id}'";
 					$res = $this->Query($sql)->fetch_assoc();
 					return $res;
+				}
+		}
+
+		public function getOrder()
+		{
+			$sql = "SELECT * FROM $this->cus_order ORDER BY day";
+			$res = $this->Query($sql);
+			$data = [];
+			
+			while($row = $res->fetch_assoc()){
+				$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function customer($id){
+			$sql = "SELECT * FROM $this->customer WHERE id = '$id'";
+			$res = $this->Query($sql);
+			if($res->num_rows == 1){
+				$user = $res->fetch_assoc();
+				return $user;
+			}
+			return null ;
+		}
+
+		public function ship($id,$time,$price)
+		{
+			$sql = "UPDATE $this->cus_order SET status=1
+			WHERE id='$id' AND price='$price' AND day='$time'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='alert-success'>Tiến hành ship</span>";
+					return $alert;
+				}
+		}
+
+		public function confirm($id)
+		{
+			$sql = "UPDATE $this->cus_order SET status=2 WHERE id='$id'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='alert-success'>Đã nhận hàng</span>";
+					return $alert;
+				}
+		}
+
+		public function delShipped($id)
+		{
+			$sql = "DELETE FROM $this->cus_order WHERE id='$id'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='alert-success'>Xóa thành công</span>";
+					return $alert;
 				}
 		}
 

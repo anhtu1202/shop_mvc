@@ -1,21 +1,7 @@
 <?php 
-		include 'inc/header.php'; 
-		// if (isset($_GET['product_id']) && $_GET['product_id'] != NULL) {
-  //       	$product_id = $_GET['product_id'];
-	 //    }else{
-	 //        echo "<script>window.location = '404.php';</script>";
-	 //    }
-	 //    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-	 //    	$quantity = $_POST['quantity'];
-  //       $insert_cart = $ct->insert_cart($product_id,$quantity);
-  //   }
-
-		$login_check = Session::get("customer_login");
-			if ($login_check == false) {
-				header('Location:login.php');
-			}
-	
-?>	
+        include 'Inc/header.php'; 
+        
+?>  
 <style type="text/css">
     .right{
         float: right;
@@ -50,20 +36,21 @@
     	<div class="section group" style="background-color: #ffff99;">
     		<div class="content_top">
     		<div class="heading">
-    		<h3>Payment Method</h3>
+    		<h3>Thanh toán</h3>
     		</div>
     		<div class="clear"></div>
             <div style="width: 70%; margin: auto; padding: 50px;">
-                <h3 class="title">Choose your method payment</h3>
-            <button class="right"><a href="onlinepayment.php">Online Payment</a></button>
-            <button class="left"><a href="offlinepayment.php">Offline Payment</a></button>
+                <h3 class="title">Chọn hình thức thanh toán</h3>
+            <button class="right"><a href="?act=onlinepayment">Thanh toán online</a></button>
+            <button class="left"><a href="?act=offlinepayment">Thanh toán tiền mặt</a></button>
             </div>
+             <button class="btn btn-primary"><a href="<?php echo base_path; ?>">Quay lại</a></button>
     	</div>
  			</div>
  		</div>
  	</div>
 
 <?php 
-		include 'inc/footer.php'; 
-?>	
+        require_once 'Inc/footer.php'; 
+?>  
 

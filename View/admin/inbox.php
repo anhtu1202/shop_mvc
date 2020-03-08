@@ -1,28 +1,13 @@
-﻿<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
-<?php 
-	$filepath = realpath(dirname(__FILE__));
-	require_once ($filepath.'/../classes/cart.php');
-	require_once ($filepath.'/../helper/format.php');
-
-	$ct = new cart();
-	if (isset($_GET['shipped'])) {
-    $shipped_id = $_GET['shipped'];
-    $shipped = $ct->shipped($shipped_id);
-    }
-    if (isset($_GET['del_shipped'])) {
-    $shipped_id = $_GET['del_shipped'];
-    $shipped = $ct->del_shipped($shipped_id);
-    }
-?>
+﻿<?php require_once 'Incad/header.php';?>
+<?php require_once 'Incad/sidebar.php';?>
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Inbox</h2>
-                <?php 
-                	if (isset($shipped)) {
-                		echo $shipped;
-                	}
-                 ?>
+				<?php 
+					if(!empty($this->dataView['msg'])){
+						echo $this->dataView['msg'];
+					}
+				 ?>
                 <div class="block">        
                     <table class="data display datatable" id="example">
 					<thead>
@@ -32,37 +17,34 @@
 							<th>Product Name</th>
 							<th>Price</th>
 							<th>Quantity</th>
-							<th>Customer</th>
+							<th>Customer ID</th>
 							<th>Address</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<?php $ct = new cart();
-							$fm = new Format();
-							$get_order_cart = $ct->get_order_cart();
-							if ($get_order_cart) {
-								$i = 0;
-								while ($result = $get_order_cart->fetch_assoc()) {
-									$i++;
+						<?php 
+							if(!empty($this->dataView)){
+                                foreach ($this->dataView as $key => $result) {
 						 ?>
 						<tr class="odd gradeX">
-							<td><?php echo $i; ?></td>
-							<td><?php echo $fm->formatDate($result['day']); ?></td>
+							<td><?php echo $key+1; ?></td>
+							<td><?php echo $result['day']; ?></td>
 							<td><?php echo $result['product_name']; ?></td>
 							<td><?php echo number_format($result['price']); ?> VNĐ</td>
 							<td><?php echo $result['quantity']; ?></td>
 							<td><?php echo $result['customer_id']; ?></td>
-							<td><a href="customer.php?customer_id=<?php echo $result['customer_id']; ?>">View Customer</a></td>
+							<td><a href="?ct=user&act=customer&id=<?php echo $result['customer_id']; ?>">Xem khách hàng</a></td>
 							<td>
 							<?php if ($result['status'] == 0) {
 							 ?>
-								<a href="?shipped=<?php echo $result['id']; ?>">Pending...</a>
+								<a href="?ct=user&act=Ship&shipped=<?php echo $result['id']; ?>&time=<?php echo $result['day']; ?>
+								&price=<?php echo $result['price']; ?>">Xử lí...</a>
 							<?php }else if ($result['status'] == 1){
 							?>
 								Shipting...
 							<?php }else{ ?>
-								<a href="?del_shipped=<?php echo $result['id']; ?>">Remove</a>
+								<a href="?ct=user&act=delshipped&id=<?php echo $result['id']; ?>">Xóa</a>
 							<?php	
 							} ?>
 							</td>
@@ -81,4 +63,9 @@
         setSidebarHeight();
     });
 </script>
-<?php include 'inc/footer.php';?>
+
+
+<?php 
+		require_once 'Incad/footer.php'; 
+?>	
+

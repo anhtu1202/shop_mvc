@@ -78,12 +78,15 @@
  </div>
 <div class="menu">
 	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
-	  <li><a href="<?php echo base_path; ?>">Home</a></li>
-	  <li><a href="?act=products">Products</a> </li>
-	  <li><a href="?act=contact">Contact</a> </li>
-	  <li><a href="?act=cart">Your Cart</a></li>
+	  <li><a href="<?php echo base_path; ?>">Trang chủ</a></li>
+	  <li><a href="?act=products">Sản phẩm</a> </li>
+	  <li><a href="?act=contact">Liên hệ</a> </li>
+	  <li><a href="?act=cart">Giỏ Hàng</a></li>
 	  <?php if (isset($_SESSION['auth'])) {
 	  	?>
+	  	<li><a href="?act=orderdetails">Ordered</a></li>
+	  	<li><a href="?act=compare">So sánh SP</a></li>
+	  	<li><a href="?act=wishlist">SP yêu thích</a></li>
 	  	<li><a href="?act=profile">Profile</a></li>
 	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout(<span style="color: red;"><?php echo $_SESSION['auth']['name']; ?></span>)</a></li>
 	  <?php } else { ?>	 

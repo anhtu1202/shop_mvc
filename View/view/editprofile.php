@@ -2,7 +2,7 @@
 		require_once 'Inc/header.php'; 
 ?>	
 <style type="text/css">
-    input{
+    .content input{
         outline-color: red;
         padding: 5px;
         width: 300px
@@ -20,7 +20,7 @@
     	<div class="section group">
     		<div class="content_top">
     		<div class="heading">
-    		<h3>Profile Customer</h3>
+    		<h3>Thông tin khách hàng</h3>
     		</div>
     		<div class="clear"></div>
     	</div>

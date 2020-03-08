@@ -118,8 +118,11 @@
 
 	public function Logout(){
 		$objProModel = new ProductModel();
-		$objProModel->delCart();
 		if(!empty($_SESSION['auth'])){
+			$id = $_SESSION['auth']['id'];
+			$objProModel->delCart();
+			$objProModel->delCompare($id);
+			$objProModel->delWishlist($id);
 			session_destroy();
 		}
 		header('Location:'.base_path);
@@ -127,12 +130,41 @@
 
 
 	public function Details(){
-		$data =[ 'pro'=>[], 'cat'=>[] ];
+		$data =[ 'msg'=>[], 'pro'=>[], 'cat'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
 			if(isset($_GET['product_id'])){
 			$objProModel = new ProductModel();
 			$objCatModel = new CatModel();
 			$data['pro'] = $objProModel->getProduct($_GET['product_id']);
 			$data['cat'] = $objCatModel->getAllCat();
+			if (isset($_POST['compare'])) {
+				if (isset($_SESSION['auth'])) {
+					$customer_id = $_SESSION['auth']['id'];
+					$product_id = $_POST['product_id'];
+					$data['msg'] = $objProModel->compareAdd($customer_id,$product_id);
+				}else {
+					$data['apple'] = $objProModel->getLastedApple();
+					$data['samsung'] = $objProModel->getLastedSamsung();
+					$data['dell'] = $objProModel->getLastedDell();
+					$data['sony'] = $objProModel->getLastedSony();
+					$data['slide'] = $objProModel->getSlider();
+					$data['msg'] = "<span class='success'>Login to choose compare</span>";
+					$this->RenderView('view.login', $data);
+				}
+			} else if (isset($_POST['wlist'])) {
+				if (isset($_SESSION['auth'])) {
+					$customer_id = $_SESSION['auth']['id'];
+					$product_id = $_POST['product_id'];
+					$data['msg'] = $objProModel->wlistAdd($customer_id,$product_id);
+				}else {
+					$data['apple'] = $objProModel->getLastedApple();
+					$data['samsung'] = $objProModel->getLastedSamsung();
+					$data['dell'] = $objProModel->getLastedDell();
+					$data['sony'] = $objProModel->getLastedSony();
+					$data['slide'] = $objProModel->getSlider();
+					$data['msg'] = "<span class='success'>Login to choose wishlist</span>";
+					$this->RenderView('view.login', $data);
+				}
+			}
 			$this->RenderView('view.details', $data);
 			}else {
 				$this->RenderView('view.404', $data);	
@@ -172,21 +204,8 @@
 					$this->RenderView('view.404', $data);
 				}
 			}
-		$this->RenderView('view.details', $data);
+		header('Location: ?act=cart');
 		}	
-		
-
-		
-	// public function Productbycat(){
-	// 	$data=['prod'=>[],'cat'=>[]];
-	// 	if(isset($_GET['cat_id'])){
-	// 		$objProModel= new ProductModel();
-	// 		$objCatModel= new CatModel();
-	// 		$data['prod'] = $objProModel->getProductbycat();
-			
-	// 	}
-	// 	$this->RenderView('view.productbycat', $data);
-	// 	}	
 
 
 	public function Cart()
@@ -207,6 +226,8 @@
 				}
 			} else if (isset($_GET['cart_id'])) {
 				$res = $objProModel->cartDel($_GET['cart_id']);
+				$_SESSION['sum'] = null;
+				$_SESSION['qtity'] = null;
 				if ($res) {
 					header('Location: ?act=cart');
 				}
@@ -255,15 +276,119 @@
 			} 
 			$this->RenderView('view.editprofile', $data);
 		}
-		public function Search(){
+
+	public function Payment()
+	{
+		$data = [ 'msg'=>[] ];
+			$ProModel = new ProductModel();
+			$objUserModel = new UserModel();
+			if (isset($_SESSION['auth'])) {
+				$this->RenderView('view.payment', $data);
+			} else {
+				$data['msg'] = "<div class='alert alert-success'>Login to payment</div>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+
+	public function Offlinepayment()
+	{
+		$data = [ 'msg'=>[], 'cart'=>[], 'user'=>[] ];
+			$objProModel = new ProductModel();
+			$objUserModel = new UserModel();
+			if (isset($_SESSION['auth'])) {
+				$id = $_SESSION['auth']['id'];
+				$email = $_SESSION['auth']['email'];
+				$data['user'] = $objUserModel->loadLogin($email);
+				$data['cart'] = $objProModel->getCart();
+				if (isset($_GET['order_id']) && $_GET['order_id'] == 'order') {
+					$res = $objProModel->Order($id);
+					if ($res == true) {
+						$_SESSION['sum'] = null; $_SESSION['qtity'] = null;
+						$delCart = $objProModel->delCart();
+						header('Location: ?act=success');
+					}
+				}
+				$this->RenderView('view.offlinepayment', $data);
+			} else {
+				$data['msg'] = "<div class='alert alert-success'>Login to payment</div>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+
+	public function Success()
+	{
+		$data = [ 'msg'=>[] ];
+		if (isset($_SESSION['auth'])) {
+				$this->RenderView('view.success', $data);
+			} else {
+				$data['msg'] = "<div class='alert alert-success'>Login to order</div>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+	
+	public function Orderdetails()
+	{
+		$data = [ 'msg'=>[] ];
+		$objProModel = new ProductModel();
+		if (isset($_SESSION['auth'])) {
+			$id = $_SESSION['auth']['id'];
+			$data = $objProModel->getOrder($id);
+				$this->RenderView('view.orderdetails', $data);
+			} else {
+				$data['msg'] = "<div class='alert alert-success'>Login to order</div>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+
+	public function Compare()
+	{
+		$data = [ 'msg'=>[], 'compare'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+		$objProModel = new ProductModel();
+		if (isset($_SESSION['auth'])) {
+			$id = $_SESSION['auth']['id'];
+			$data['compare'] = $objProModel->getCompare($id);
+			$data['apple'] = $objProModel->getLastedApple();
+			$data['samsung'] = $objProModel->getLastedSamsung();
+			$data['dell'] = $objProModel->getLastedDell();
+			$data['sony'] = $objProModel->getLastedSony();
+			$data['slide'] = $objProModel->getSlider();
+				$this->RenderView('view.compare', $data);
+			} else {
+				$data['msg'] = "<span class='success'>Login to compare view</span>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+
+	public function Wishlist()
+	{
+		$data = [ 'msg'=>[], 'wishlist'=>[], 'apple'=>[], 'samsung'=>[], 'dell'=>[], 'sony'=>[], 'slide'=>[] ];
+		$objProModel = new ProductModel();
+		if (isset($_SESSION['auth'])) {
+			$id = $_SESSION['auth']['id'];
+			$data['wishlist'] = $objProModel->getWishlist($id);
+			$data['apple'] = $objProModel->getLastedApple();
+			$data['samsung'] = $objProModel->getLastedSamsung();
+			$data['dell'] = $objProModel->getLastedDell();
+			$data['sony'] = $objProModel->getLastedSony();
+			$data['slide'] = $objProModel->getSlider();
+				$this->RenderView('view.wishlist', $data);
+			} else {
+				$data['msg'] = "<span class='success'>Login to wishlist view</span>";
+				$this->RenderView('view.login', $data);
+			}
+	}
+
+	public function Search(){
 		 $objProModel=new ProductModel();
 		if (isset($_GET['keywords'])) {
 			$keywords=$_GET['keywords'];
 
 			$res=$objProModel->SearchData($keywords);
 		
-	}
+		}
 			$this->RenderView('view.search', $res);
-		}		
+		}	
+
+
 }		
 

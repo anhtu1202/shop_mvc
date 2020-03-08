@@ -9,7 +9,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getAllPro()
 		{
-			$sql = "SELECT * FROM product
+			$sql = "SELECT * FROM $this->product
 			INNER JOIN brand ON product.brand_id=brand.brand_id
 			INNER JOIN category ON product.cat_id=category.cat_id
 			ORDER BY product_id" ;
@@ -58,7 +58,7 @@ require_once 'Helper/SimpleImage.php';
 				 $image->save(app_path."/Uploads/".$unique_image);
 				 $info[1] = 600;
 			}
-				$sql = "INSERT INTO product (product_name,cat_id,brand_id,product_price,product_image,product_desc,product_type) 
+				$sql = "INSERT INTO $this->product (product_name,cat_id,brand_id,product_price,product_image,product_desc,product_type) 
 					VALUES ('$product_name','$cat_id','$brand_id','$product_price','$unique_image','$product_desc','$product_type')";
 				$res = $this->Insert($sql);
 				if ($res) {
@@ -72,7 +72,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function proDel($id)
 		{
-			$sql = "DELETE FROM product WHERE product_id = '$id'";
+			$sql = "DELETE FROM $this->product WHERE product_id = '$id'";
 			$res = $this->Delete($sql);
 			if ($res) {
 				$alert = "<span class='success'>Insert product successfully</span>";
@@ -82,7 +82,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getPro($id)
 		{
-			$sql = "SELECT * FROM product WHERE product_id = '$id'";
+			$sql = "SELECT * FROM $this->product WHERE product_id = '$id'";
 			$res = $this->Query($sql)->fetch_assoc();
 			if ($res) {
 
@@ -92,7 +92,7 @@ require_once 'Helper/SimpleImage.php';
 		}
 
 		public function getProduct($id){
-			$sql = "SELECT * FROM product
+			$sql = "SELECT * FROM $this->product
 			INNER JOIN brand ON product.brand_id=brand.brand_id
 			INNER JOIN category ON product.cat_id=category.cat_id
 			WHERE product_id = '$id'";
@@ -130,7 +130,7 @@ require_once 'Helper/SimpleImage.php';
 				return $alert;
 			}else{
 			move_uploaded_file($file_temp, $uploaded_image);
-				$query = "UPDATE product 
+				$query = "UPDATE $this->product 
 				SET product_name='$product_name',cat_id='$cat_id',brand_id='$brand_id',product_price='$product_price',
 				product_image='$unique_image',product_desc='$product_desc',product_type='$product_type'
 				WHERE product_id='$product_id'";
@@ -143,7 +143,7 @@ require_once 'Helper/SimpleImage.php';
 				}
 			}
 			}
-			$query = "UPDATE product 
+			$query = "UPDATE $this->product 
 				SET product_name='$product_name',cat_id='$cat_id',brand_id='$brand_id',product_price='$product_price'
 				,product_desc='$product_desc',product_type='$product_type'
 				WHERE product_id='$product_id'";
@@ -158,7 +158,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getFeaPro()
 		{
-			$sql = "SELECT * FROM product WHERE product_type = 'Featured'
+			$sql = "SELECT * FROM $this->product WHERE product_type = 'Featured'
 			ORDER BY product_id DESC LIMIT 8";
 
 			$res = $this->Query($sql);
@@ -171,7 +171,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getNewPro()
 		{
-			$sql = "SELECT * FROM product ORDER BY product_id DESC LIMIT 8";
+			$sql = "SELECT * FROM $this->product ORDER BY product_id DESC LIMIT 8";
 
 				$res = $this->Query($sql);
 				$data = [];
@@ -183,28 +183,28 @@ require_once 'Helper/SimpleImage.php';
 
 		public function getLastedApple()
 		{
-			$sql = "SELECT * FROM product WHERE brand_id = 3 ORDER BY product_id DESC LIMIT 1";
+			$sql = "SELECT * FROM $this->product WHERE brand_id = 3 ORDER BY product_id DESC LIMIT 1";
 			$res[] = $this->Query($sql)->fetch_assoc();
 				return $res;
 		}
 
 		public function getLastedSamsung()
 		{
-			$sql = "SELECT * FROM product WHERE brand_id = 1 ORDER BY product_id DESC LIMIT 1";
+			$sql = "SELECT * FROM $this->product WHERE brand_id = 1 ORDER BY product_id DESC LIMIT 1";
 			$res[] = $this->Query($sql)->fetch_assoc();
 				return $res;
 		}
 
 		public function getLastedSony()
 		{
-			$sql = "SELECT * FROM product WHERE brand_id = 2 ORDER BY product_id DESC LIMIT 1";
+			$sql = "SELECT * FROM $this->product WHERE brand_id = 2 ORDER BY product_id DESC LIMIT 1";
 			$res[] = $this->Query($sql)->fetch_assoc();
 				return $res;
 		}
 
 		public function getLastedDell()
 		{
-			$sql = "SELECT * FROM product WHERE brand_id = 4 ORDER BY product_id DESC LIMIT 1";
+			$sql = "SELECT * FROM $this->product WHERE brand_id = 4 ORDER BY product_id DESC LIMIT 1";
 			$res[] = $this->Query($sql)->fetch_assoc();
 				return $res;
 		}
@@ -220,9 +220,31 @@ require_once 'Helper/SimpleImage.php';
 			return $data;
 		}
 
+		public function getCompare($id)
+		{
+			$sql = "SELECT * FROM compare WHERE customer_id='$id'";
+			$res = $this->Query($sql);
+				$data = [];
+				while($row = $res->fetch_assoc()){
+					$data[] = $row;
+				}
+			return $data;
+		}
+
+		public function getWishlist($id)
+		{
+			$sql = "SELECT * FROM wishlist WHERE customer_id='$id'";
+			$res = $this->Query($sql);
+				$data = [];
+				while($row = $res->fetch_assoc()){
+					$data[] = $row;
+				}
+			return $data;
+		}
+
 		public function getProductCat($id)
 		{
-			$sql = "SELECT * FROM product INNER JOIN category ON product.cat_id=category.cat_id WHERE product.cat_id=$id AND product_type = 'Featured'";
+			$sql = "SELECT * FROM $this->product INNER JOIN category ON product.cat_id=category.cat_id WHERE product.cat_id=$id AND product_type = 'Featured'";
 			$res = $this->Query($sql);
 				$data = [];
 				while($row = $res->fetch_assoc()){
@@ -233,7 +255,7 @@ require_once 'Helper/SimpleImage.php';
 
 		public function cartAdd($id,$quantity)
 		{
-			$sql = "SELECT * FROM product WHERE product_id='$id'";
+			$sql = "SELECT * FROM $this->product WHERE product_id='$id'";
 			$res = $this->Query($sql)->fetch_assoc();
 			$sess_id = session_id();
 			$product_name = $res['product_name'];
@@ -268,12 +290,12 @@ require_once 'Helper/SimpleImage.php';
 		}
 
 	public function getProductbycat(){
-		$sql = "SELECT * FROM product INNER JOIN category ON product.cat_id=category.cat_id ";
+		$sql = "SELECT * FROM $this->product INNER JOIN category ON product.cat_id=category.cat_id ";
 		$res = $this->Query($sql)->fetch_assoc();
 			if ($res) {
 				return $res;
 
-}}
+		}}
 		public function cartUpdate($id,$quantity)
 		{
 			$sql = "UPDATE cart SET quantity='$quantity'  WHERE cart_id='$id'";
@@ -287,7 +309,7 @@ require_once 'Helper/SimpleImage.php';
 		public function cartDel($id)
 		{
 			$sql = "DELETE FROM cart WHERE cart_id='$id'";
-			$res = $this->Update($sql);
+			$res = $this->Delete($sql);
 				if ($res) {
 					$alert = "<span class='success'>Delete cart success</span>";
 					return $alert;
@@ -299,15 +321,112 @@ require_once 'Helper/SimpleImage.php';
 		{
 			$sess_id = session_id();
 			$sql = "DELETE FROM cart WHERE sess_id='$sess_id'";
-			$res = $this->Update($sql);
+			$res = $this->Delete($sql);
 				if ($res) {
 					$alert = "<span class='success'>Delete cart success</span>";
 					return $alert;
 				}
 		}
 
+		public function Order($id)
+		{
+			$sess_id = session_id();
+			$sql = "SELECT * FROM cart WHERE sess_id='$sess_id'";
+			$res = $this->Query($sql);
+				while($row = $res->fetch_assoc()){
+					$product_id = $row['product_id'];
+					$product_name = $row['product_name'];
+					$customer_id = $id;
+					$price = $row['price'];
+					$quantity = $row['quantity'];
+					$image = $row['image'];
+
+				$today = date("Y-m-d H:i:s"); 
+				$sqlpro = "INSERT INTO cus_order (product_id,product_name,customer_id,quantity,price,image,status,day) 
+				VALUES ('$product_id','$product_name','$customer_id','$quantity','$price','$image',0,'$today')";
+					$return = $this->Insert($sqlpro);
+					}
+			return true;
+		}
+
+		public function getOrder($id)
+		{
+			$sql = "SELECT * FROM cus_order WHERE customer_id='$id'";
+			$res = $this->Query($sql);
+			$data = [];
+			
+			while($row = $res->fetch_assoc()){
+				$data[] = $row;
+			}
+			return $data;	
+		}
+
+		public function compareAdd($customer_id,$product_id)
+		{
+			$checkcompare = "SELECT * FROM compare WHERE product_id='$product_id' AND customer_id='$customer_id'";
+			$compare = $this->Query($checkcompare)->fetch_assoc();
+			if ($compare) {
+				$alert = "<span class='success'>Sản sẩm này đã tồn tại</span>";
+					return $alert;
+			} else {
+
+			$checkproduct = "SELECT * FROM $this->product WHERE product_id='$product_id'";
+			$product = $this->Query($checkproduct)->fetch_assoc();
+
+			$product_name = $product['product_name'];
+			$product_price = $product['product_price'];
+			$product_image = $product['product_image'];
+			$sqlcompare = "INSERT INTO compare (customer_id,product_id,product_name,product_price,product_image) 
+				VALUES ('$customer_id','$product_id','$product_name','$product_price','$product_image')";
+				$return = $this->Insert($sqlcompare);
+				if ($return) {
+					$alert = "<span class='success'>Đã thêm sản phẩm so sánh</span>";
+					return $alert;
+				}
+			}	
+		}
+
+		public function wlistAdd($customer_id,$product_id)
+		{
+			$checkcompare = "SELECT * FROM wishlist WHERE product_id='$product_id' AND customer_id='$customer_id'";
+			$compare = $this->Query($checkcompare)->fetch_assoc();
+			if ($compare) {
+				$alert = "<span class='success'>Sản sẩm này đã tồn tại</span>";
+					return $alert;
+			} else {
+
+			$checkproduct = "SELECT * FROM $this->product WHERE product_id='$product_id'";
+			$product = $this->Query($checkproduct)->fetch_assoc();
+
+			$product_name = $product['product_name'];
+			$product_price = $product['product_price'];
+			$product_image = $product['product_image'];
+			$sqlwlist = "INSERT INTO wishlist (customer_id,product_id,product_name,product_price,product_image) 
+				VALUES ('$customer_id','$product_id','$product_name','$product_price','$product_image')";
+				$return = $this->Insert($sqlwlist);
+				if ($return) {
+					$alert = "<span class='success'>Đã thêm sản phẩm yêu thích</span>";
+					return $alert;
+				}
+			}	
+		}
+
+		public function delCompare($id)
+		{
+			$sql = "DELETE FROM compare WHERE customer_id='$id'";
+			$res = $this->Delete($sql);
+			return true;
+		}
+
+		public function delWishlist($id)
+		{
+			$sql = "DELETE FROM wishlist WHERE customer_id='$id'";
+			$res = $this->Delete($sql);
+			return true;
+		}
+
 		public function SearchData($keywords){
-			$sql = "SELECT * FROM product
+			$sql = "SELECT * FROM $this->product
 			INNER JOIN brand ON product.brand_id=brand.brand_id
 			INNER JOIN category ON product.cat_id=category.cat_id WHERE product_name REGEXP '$keywords'
 			 ORDER BY product_id " ;

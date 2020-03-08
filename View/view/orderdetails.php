@@ -15,6 +15,9 @@
 	    		<div class="heading">
 	    		<h3>Sản phẩm của bạn</h3>
 	    		</div>
+	    		<?php if (!empty($this->dataView['msg'])) {
+	    			echo $this->dataView['msg'];
+	    		} ?>
 	    		<div class="clear"></div>
 	    		<div class="box">
 	    			<div class="cartpage">
@@ -41,20 +44,22 @@
 								<td><?php echo number_format($result['price']); ?> VNĐ</td>
 								<td><?php echo $result['quantity']; ?></td>
 								<td><?php if ($result['status'] == 0) {
-									echo "Pending";
+									echo "Đang xử lí";
 								}else if ($result['status'] == 1){
 								?>
 								Shipped...
-								<?php } ?>
+								<?php } else if ($result['status'] == 2) {
+									echo "Đã nhận";
+								} ?>
 								</td>
 								<td><?php echo $fm->formatDate($result['day']); ?></td>
 								<td>
 									<?php if ($result['status'] == 0) {
 										echo "N/A";
 									}else if ($result['status'] == 1){ ?>
-										<a href="?act=confirm&confirm_id=<?php echo $result['id']; ?>">Cornfirmed</a></td>
-									<?php }else{ ?>	
-										Received
+										<a href="?ct=user&act=confirm&confirm_id=<?php echo $result['id']; ?>">Nhận hàng</a></td>
+									<?php }else if ($result['status'] == 2) { ?>	
+										Đã nhận
 									</td>
 									<?php } ?>
 							</tr>
@@ -65,7 +70,7 @@
 					</div>	
 					<div class="shopping">
 						<div class="shopleft">
-							<a href="index.php"> <img src="Uploads/shop.png" alt="" /></a>
+							<a href="<?php echo base_path; ?>"> <img src="Uploads/shop.png" alt="" /></a>
 						</div>
 					</div>			
       				 <div class="clear"></div>
@@ -75,7 +80,8 @@
  		</div>
  	</div>
 
+
 <?php 
-		include 'inc/footer.php'; 
+		require_once 'Inc/footer.php'; 
 ?>	
 
