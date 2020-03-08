@@ -44,6 +44,6 @@
             </div>
         </div>
 <?php 
-        require_once 'Inc/footer.php'; 
+        require_once 'Incad/footer.php'; 
 ?>  
 

@@ -70,4 +70,47 @@ class UserController extends ControllerBase{
 			$this->RenderView('admin.inbox', $data);
 		}
 	}
+
+	public function Userlist()
+	{
+		$data = [ 'msg'=>[] ];
+		$objUserModel = new UserModel();
+		if (isset($_SESSION['auth'])) {
+			$data = $objUserModel->userList();
+				$this->RenderView('admin.userlist', $data);
+			} else {
+				$this->RenderView('view.404', $data);
+			}
+	}
+
+	public function Userup()
+	{
+		$data = [ 'msg'=>[] ];
+		$objUserModel = new UserModel();
+		if (isset($_SESSION['auth'])) {
+			$data = $objUserModel->userList();
+			if (isset($_GET['id'])) {
+				$data['msg'] = $objUserModel->userUp($_GET['id']);
+				}
+				$this->RenderView('admin.userlist', $data);
+			} else {
+				$this->RenderView('view.404', $data);
+			}
+	}
+
+	public function Userdown()
+	{
+		$data = [ 'msg'=>[] ];
+		$objUserModel = new UserModel();
+		if (isset($_SESSION['auth'])) {
+			$data = $objUserModel->userList();
+			if (isset($_GET['id'])) {
+				$data['msg'] = $objUserModel->userDown($_GET['id']);
+				}
+				$this->RenderView('admin.userlist', $data);
+			} else {
+				$this->RenderView('view.404', $data);
+			}
+	}
+
 }

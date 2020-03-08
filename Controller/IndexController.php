@@ -383,12 +383,23 @@
 		if (isset($_GET['keywords'])) {
 			$keywords=$_GET['keywords'];
 
-			$res=$objProModel->SearchData($keywords);
+			$data=$objProModel->SearchData($keywords);
 		
 		}
-			$this->RenderView('view.search', $res);
+			$this->RenderView('view.search', $data);
 		}	
 
+	public function Admin()
+	{
+		$data = [ 'msg'=>[] ];
+		if (isset($_SESSION['auth'])) {
+			if ($_SESSION['auth']['id'] == 1 || $_SESSION['auth']['id'] == 2) {
+			$this->RenderView('admin.index', $data);
+			}
+		} else {
+			$this->RenderView('view.404', $data);
+		}
+	}
 
 }		
 

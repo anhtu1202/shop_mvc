@@ -7,6 +7,7 @@
                         <li><a href="?ct=pms&act=pmsadd">Add Pms</a> </li>
                         <li><a href="?ct=pms&act=pmslist">Pms List</a> </li>
                         <li><a href="?ct=pms&act=rolelist">Role List</a> </li>
+                        <li><a href="?ct=user&act=userlist">User List</a> </li>
                     </ul>
                 </li>
                 <li><a class="menuitem">Category Products</a>

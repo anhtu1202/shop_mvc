@@ -88,6 +88,11 @@
 	  	<li><a href="?act=compare">So sánh SP</a></li>
 	  	<li><a href="?act=wishlist">SP yêu thích</a></li>
 	  	<li><a href="?act=profile">Profile</a></li>
+	  	<?php 
+	  		if ($_SESSION['auth']['id'] == 1 || $_SESSION['auth']['id'] == 2) {
+	  	 ?>
+		<li><a href="?act=admin">Doashboard</a></li>
+	  	<?php } ?>
 	  	 <li style="float: right;"><a href="<?php echo base_path; ?>?act=logout">Logout(<span style="color: red;"><?php echo $_SESSION['auth']['name']; ?></span>)</a></li>
 	  <?php } else { ?>	 
 	  <li style="float: right;"><a href="<?php echo base_path; ?>?act=login">Login</a></li>

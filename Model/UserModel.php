@@ -146,4 +146,37 @@ require_once app_path.'/Sendmail/sendmail.php';
 				}
 		}
 
+		public function userList()
+		{
+			$sql = "SELECT * FROM $this->customer INNER JOIN tb_role 
+			ON customer.id_role=tb_role.id ORDER BY id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			
+			while($row = $res->fetch_assoc()){
+				$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function userUp($id)
+		{
+			$sql = "UPDATE $this->customer SET status=2 WHERE id='$id'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='alert-success'>Đã lên cấp</span>";
+					return $alert;
+				}
+		}
+
+		public function userDown($id)
+		{
+			$sql = "UPDATE $this->customer SET status=3 WHERE id='$id'";
+				$res = $this->Update($sql);
+				if ($res) {
+					$alert = "<span class='alert-success'>Đã hạ cấp</span>";
+					return $alert;
+				}
+		}
+
 	}
