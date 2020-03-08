@@ -4,11 +4,11 @@
     <div class="box round first grid">
         <h2>Add New Slider</h2>
         <div class="block">    
-        <?php 
-                    if (isset($insert_slide)) {
-                        echo $insert_slide;
+            <?php 
+                    if(!empty($this->dataView['msg'])){
+                        echo $this->dataView['msg'];
                     }
-                 ?>           
+                ?>       
 <form action="" method="post" class="form-group" enctype="multipart/form-data" onsubmit="return Regex()">
             <table class="form">
                

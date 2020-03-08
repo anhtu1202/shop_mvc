@@ -53,10 +53,10 @@
                                     if(!empty($this->dataView['brand'])){
                                         foreach ($this->dataView['brand'] as $key => $valuebrand) {
                                  ?>
-                                    <option value="<?php echo $valuecat['brand_id']; ?>">
-                                        <?php echo $valuecat['brand_name']; ?>
+                                    <option value="<?php echo $valuebrand['brand_id']; ?>">
+                                        <?php echo $valuebrand['brand_name']; ?>
                                     </option>
-                            
+                            <?php }} ?>
                         </select>
                     </td>
                 </tr>
@@ -147,7 +147,4 @@
     }
 </script>
 <?php require_once 'Incad/footer.php';?>
-
-<?php 
-}} ?>
 

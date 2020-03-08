@@ -8,8 +8,11 @@ class ProductController extends ControllerBase
 
 	public function Productadd(){
 		$data =['msg'=>[], 'cat'=>[], 'brand'=>[] ];
+		$objProModel = new ProductModel();
 		$objCatModel = new CatModel();
+		$objBrandModel = new BrandModel();
 		$data['cat'] = $objCatModel->getAllCat();
+		$data['brand'] = $objBrandModel->getAllBrand();
 		if (isset($_POST['submit'])) {
 			$res = $objProModel->productAdd($_POST, $_FILES); //gọi hàm trong model để lấy danh sách
 			if ($res) {

@@ -33,8 +33,8 @@ require_once 'Helper/SimpleImage.php';
 			$product_price = $data['product_price'];
 			$product_type = $data['product_type'];
 			$permited = array('jpg','jpeg','png','gif');
-			$file_name = $_FILES['images']['name'];
-			$file_temp = $_FILES['images']['tmp_name'];
+			$file_name = $_FILES['image']['name'];
+			$file_temp = $_FILES['image']['tmp_name'];
 			$file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 			$unique_image = mt_rand(100,10000).".".$file_ext;
 			$uploaded_image = "Uploads/".$unique_image;
@@ -59,7 +59,7 @@ require_once 'Helper/SimpleImage.php';
 				 $info[1] = 600;
 			}
 				$sql = "INSERT INTO $this->product (product_name,cat_id,brand_id,product_price,product_image,product_desc,product_type) 
-					VALUES ('$product_name','$cat_id','$brand_id','$product_price','$unique_image','$product_desc','$product_type')";
+					VALUES ('$product_name','$cat_id','$brand_id','$product_price','$uploaded_image','$product_desc','$product_type')";
 				$res = $this->Insert($sql);
 				if ($res) {
 					$alert = "<span class='success'>Insert product successfully</span>";

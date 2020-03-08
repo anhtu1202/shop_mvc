@@ -19,7 +19,8 @@
 				<tr>
 					<th width="5%">No.</th>
 					<th width="15%">Slider Name</th>
-					<th width="70%">Slider Image</th>
+					<th width="30%">Slider Image</th>
+					<th width="15%">Slider Type</th>
 					<th width="10%">Action</th>
 				</tr>
 			</thead>
@@ -31,7 +32,15 @@
 				<tr class="odd gradeX">
 					<td><?php echo $key+1; ?></td>
 					<td><?php echo $result['slide_name']; ?></td>
-					<td><img width="35%" src="<?php echo $result['slide_image']; ?>"/></td>				
+					<td><img width="55%" src="<?php echo $result['slide_image']; ?>"/></td>		
+					<td>
+					<?php if ($result['slide_type'] == 0) {
+					?>
+						<i class="fa fa-eye"></i>
+					<?php } else if ($result['slide_type'] == 1) { ?>
+						<i class="fa fa-eye-slash"></i>
+					<?php } ?>	
+				</td>		
 				<td>
 					<a href="?ct=slide&act=slideedit&id=<?php echo $result['slide_id']; ?>">Edit</a> || 
 					<a onclick="return confirm('Are you sure to Delete!');" href="?ct=slide&act=slidedel&id=<?php echo $result['slide_id']; ?>" >Delete</a> 
