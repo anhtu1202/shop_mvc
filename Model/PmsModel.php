@@ -50,8 +50,72 @@
 		{
 			$sql = "SELECT * FROM  $this->tb_role
 			INNER JOIN role_pms on tb_role.id = role_pms.id_role
-			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id
-			ORDER BY role_pms.id_role";
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'Pms%' ORDER BY role_pms.id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+			$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function getAllRolePro()
+		{
+			$sql = "SELECT * FROM  $this->tb_role
+			INNER JOIN role_pms on tb_role.id = role_pms.id_role
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'Pro%' ORDER BY role_pms.id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+			$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function getAllRoleCat()
+		{
+			$sql = "SELECT * FROM  $this->tb_role
+			INNER JOIN role_pms on tb_role.id = role_pms.id_role
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'Cat%' ORDER BY role_pms.id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+			$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function getAllRoleBrand()
+		{
+			$sql = "SELECT * FROM  $this->tb_role
+			INNER JOIN role_pms on tb_role.id = role_pms.id_role
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'Brand%' ORDER BY role_pms.id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+			$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function getAllRoleSlide()
+		{
+			$sql = "SELECT * FROM  $this->tb_role
+			INNER JOIN role_pms on tb_role.id = role_pms.id_role
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'Slide%' ORDER BY role_pms.id_role";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+			$data[] = $row;
+			}
+			return $data;
+		}
+
+		public function getAllRoleUser()
+		{
+			$sql = "SELECT * FROM  $this->tb_role
+			INNER JOIN role_pms on tb_role.id = role_pms.id_role
+			INNER JOIN tb_pms on role_pms.id_pms = tb_pms.id WHERE tb_role.id = role_pms.id_role AND role_pms.id_pms = tb_pms.id AND tb_pms.name_pms LIKE 'User%' ORDER BY role_pms.id_role";
 			$res = $this->Query($sql);
 			$data = [];
 			while($row = $res->fetch_assoc()){
