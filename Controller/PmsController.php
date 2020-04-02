@@ -11,7 +11,7 @@ class PmsController extends ControllerBase
 	}
 
 	public function Rolelist(){
-		$data =['msg'=>[] ];
+		$data =['msg'=>[], 'role_pms'=>[], 'role_pro'=>[], 'role_brand'=>[], 'role_cat'=>[], 'role_slide'=>[] , 'role_user'=>[] ];
 		$objPmsModel = new PmsModel(); // tạo đối tượng model
 		if (isset($_POST['submit'])) {
 				$id_role = $_POST['role'];
@@ -20,6 +20,11 @@ class PmsController extends ControllerBase
 				$data['msg'] = $succes;
 			}
 		$data['role_pms'] = $objPmsModel->getAllRolePms();
+		$data['role_pro'] = $objPmsModel->getAllRolePro();
+		$data['role_brand'] = $objPmsModel->getAllRoleBrand();
+		$data['role_cat'] = $objPmsModel->getAllRoleCat();
+		$data['role_slide'] = $objPmsModel->getAllRoleSlide();
+		$data['role_user'] = $objPmsModel->getAllRoleUser();
 		$data['role'] = $objPmsModel->getAllRole();
 		$data['pms']= $objPmsModel->getAllPms();
 		$this->RenderView('admin.rolepms', $data);

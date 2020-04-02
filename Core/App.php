@@ -62,7 +62,7 @@
 
 			
 
-			$arr_public_action = ['Index.Index','Index.Details','Index.Login','Index.Products','Index.Regis','Index.Captcha','Index.Buy','Index.Cart','Index.Productcat','Index.Contact','Index.Profile','Index.Editprofile','Index.Search','Index.Payment','Index.Offlinepayment','Index.Success','Index.Orderdetails','User.Confirm','Index.Compare','Index.Wishlist'];
+			$arr_public_action = ['Index.Index','Index.Details','Index.Login','Index.Products','Index.Regis','Index.Captcha','Index.Buy','Index.Cart','Index.Productcat','Index.Contact','Index.Search','Index.Payment','Index.Offlinepayment','Index.Success','Index.Orderdetails','User.Confirm','Index.Compare','Index.Wishlist','Index.Productcat'];
 
 
 			if(in_array($strCheck, $arr_public_action)){

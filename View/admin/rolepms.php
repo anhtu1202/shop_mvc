@@ -2,7 +2,7 @@
 <?php require_once 'Incad/sidebar.php';?>
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Cập nhật quyền: </h2>
+                <h2>Cập nhật quyền Product: </h2>
                 <div class="block">  
 					    <table class="data display datatable" id="example">
 					    	<thead>
@@ -14,7 +14,119 @@
 							</thead>
 							<tbody>
 							<?php
-								$role_pms = $this->dataView['role_pms'];
+								$role_pms = $this->dataView['role_pro'];
+							foreach ($role_pms as $key => $value_rp) {
+							 ?>
+							<tr>
+								<td><?php echo $key+1; ?></td>
+								<td><?php echo $value_rp['name_role']; ?></td>
+								<td><?php echo $value_rp['name_pms']; ?></td>
+							</tr>
+						<?php } ?>
+							</tbody>
+						</table>
+						</div>
+		            </div>
+		        </div>
+		        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>Cập nhật quyền Category: </h2>
+                <div class="block">  
+					    <table class="data display datatable" id="example">
+					    	<thead>
+								<tr>
+									<th>Serial No.</th>
+									<th>Người được cấp action</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								$role_pms = $this->dataView['role_cat'];
+							foreach ($role_pms as $key => $value_rp) {
+							 ?>
+							<tr>
+								<td><?php echo $key+1; ?></td>
+								<td><?php echo $value_rp['name_role']; ?></td>
+								<td><?php echo $value_rp['name_pms']; ?></td>
+							</tr>
+						<?php } ?>
+							</tbody>
+						</table>
+						</div>
+		            </div>
+		        </div>
+		        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>Cập nhật quyền Brand: </h2>
+                <div class="block">  
+					    <table class="data display datatable" id="example">
+					    	<thead>
+								<tr>
+									<th>Serial No.</th>
+									<th>Người được cấp action</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								$role_pms = $this->dataView['role_brand'];
+							foreach ($role_pms as $key => $value_rp) {
+							 ?>
+							<tr>
+								<td><?php echo $key+1; ?></td>
+								<td><?php echo $value_rp['name_role']; ?></td>
+								<td><?php echo $value_rp['name_pms']; ?></td>
+							</tr>
+						<?php } ?>
+							</tbody>
+						</table>
+						</div>
+		            </div>
+		        </div>
+		        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>Cập nhật quyền Slide: </h2>
+                <div class="block">  
+					    <table class="data display datatable" id="example">
+					    	<thead>
+								<tr>
+									<th>Serial No.</th>
+									<th>Người được cấp action</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								$role_pms = $this->dataView['role_slide'];
+							foreach ($role_pms as $key => $value_rp) {
+							 ?>
+							<tr>
+								<td><?php echo $key+1; ?></td>
+								<td><?php echo $value_rp['name_role']; ?></td>
+								<td><?php echo $value_rp['name_pms']; ?></td>
+							</tr>
+						<?php } ?>
+							</tbody>
+						</table>
+						</div>
+		            </div>
+		        </div>
+		        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>Cập nhật quyền User: </h2>
+                <div class="block">  
+					    <table class="data display datatable" id="example">
+					    	<thead>
+								<tr>
+									<th>Serial No.</th>
+									<th>Người được cấp action</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								$role_pms = $this->dataView['role_user'];
 							foreach ($role_pms as $key => $value_rp) {
 							 ?>
 							<tr>
@@ -54,9 +166,11 @@
 						</select>
 						<input type="submit" name="submit" class="btn btn-primary m-2" id="" value="Cập nhật">
 					</form>
-               </div>
-            </div>
-        </div>
+						</div>
+		            </div>
+		        </div>
+					
+
 <script type="text/javascript">
 	$(document).ready(function () {
 	    setupLeftMenu();
