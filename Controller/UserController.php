@@ -14,6 +14,27 @@ class UserController extends ControllerBase{
 			}
 	}
 
+	public function History()
+	{
+		$data = [ 'msg'=>[] ,'history'=>[],'error'=>[]];
+		$objUserModel = new UserModel();
+		
+		if (isset($_SESSION['auth'])) {
+			if(isset($_POST['date'])){	
+				$data['msg'] = $objUserModel->getTotalMoney($_POST['date']);
+
+				if( !isset($data['msg'])) {
+					$data['error']="Có cl";
+				}	
+			}
+
+			$data['history'] = $objUserModel->getHistory();
+				$this->RenderView('admin.history', $data);
+			} else {
+				$this->RenderView('view.404', $data);
+			}
+	}
+
 	public function Customer()
 	{
 		$data = [ 'msg'=>[] ];
@@ -27,20 +48,22 @@ class UserController extends ControllerBase{
 	}
 
 	public function Ship()
-	{
+	{	
+
 		$data = [ 'msg'=>[] ];
 		$objUserModel = new UserModel();
-		if (isset($_GET['shipped'])) {
+		if (isset($_GET['shipped'])) {		
 			$id = $_GET['shipped'];
 			$time = $_GET['time'];
 			$price = $_GET['price'];
 			$res = $objUserModel->ship($id,$time,$price);
+
 			if ($res) {
 				$data['msg'] = $res;
 				$data = $objUserModel->getOrder();
 			}
-			$this->RenderView('admin.inbox', $data);
 		}
+		$this->RenderView('admin.inbox', $data); 
 	}
 
 	public function Confirm()

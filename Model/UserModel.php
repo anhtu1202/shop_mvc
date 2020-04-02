@@ -105,6 +105,17 @@ require_once app_path.'/Sendmail/sendmail.php';
 			return $data;
 		}
 
+
+		public function getHistory()
+		{
+			$sql = "SELECT * FROM history ORDER BY day";
+			$res = $this->Query($sql);
+			$data = [];
+			while($row = $res->fetch_assoc()){
+				$data[] = $row;
+			}
+			return $data;
+		}
 		public function customer($id){
 			$sql = "SELECT * FROM $this->customer WHERE id = '$id'";
 			$res = $this->Query($sql);
@@ -137,13 +148,29 @@ require_once app_path.'/Sendmail/sendmail.php';
 		}
 
 		public function delShipped($id)
-		{
-			$sql = "DELETE FROM $this->cus_order WHERE id='$id'";
+		{	
+			$sql= "SELECT * FROM $this->cus_order WHERE id='$id'";
+				$data= $this->Query($sql)->fetch_assoc();
+				
+				$product_name = $data['product_name'];
+				$customer_id=$data['customer_id'];
+				$quantity = $data['quantity'];
+				$price = $data['price'];
+				$image = $data['image'];
+				$day=$data['day'];
+
+				 
+			$history="INSERT INTO history VALUES ('','$product_name','$customer_id','$quantity','$price','$image','$day' ) ";
+			if($this->Insert($history)){
+				$sql = "DELETE FROM $this->cus_order WHERE id='$id'";
+
 				$res = $this->Update($sql);
-				if ($res) {
+			if ($res) {
 					$alert = "<span class='alert-success'>Xóa thành công</span>";
 					return $alert;
+
 				}
+			}		
 		}
 
 		public function userList()
@@ -178,5 +205,15 @@ require_once app_path.'/Sendmail/sendmail.php';
 					return $alert;
 				}
 		}
+
+		public function getTotalMoney($day)
+		{
+
+			$sql = "SELECT SUM(price) AS totalmoney  FROM history WHERE day >='$day' ";
+			$res = $this->Query($sql)->fetch_assoc();
+			 if($res['totalmoney']>0){
+			 	return $res['totalmoney'];
+			 } 
+	 	 }
 
 	}
